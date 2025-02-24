@@ -1,11 +1,10 @@
 # Welcome to Material MkDocs
 
 For material for MKDocs, visit [squidfunk.github.io/mkdocs-material](https://squidfunk.github.io/mkdocs-material/).
+
+Reference pages: [mkdocs reference](https://squidfunk.github.io/mkdocs-material/reference/code-blocks/)
+
 For full documentation visit [mkdocs.org](https://www.mkdocs.org).
-
-
-https://squidfunk.github.io/mkdocs-material/reference/code-blocks/
-
 
 ## Commands
 
