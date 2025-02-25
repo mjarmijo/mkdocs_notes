@@ -24,12 +24,18 @@ We’ll walk through a context switch in a Linux system where the kernel switche
 - **Pausing Task A**: The kernel halts Task A’s execution when the scheduler decides to switch. The key here is to **preserve the task’s state** so that it can continue seamlessly from where it left off.
 
 - **What gets saved**: The kernel saves the following state of Task A:
-  - **CPU Registers**: These are temporary data storage areas used by the CPU to hold values that the task is currently working with (like intermediate calculations, pointers to memory, etc.). Each task has its own set of registers, so when switching, the current set of registers needs to be saved to avoid overwriting the task's data.
+  - **CPU Registers**: These are small, fast, temporary storage areas used by the CPU to hold values that the task is currently working with (like data, intermediate calculations, pointers to memory, etc.). They are also known as processor registers or memory registers
+    - Examples of CPU registers include the **program counter (PC)**, **stack pointer (SP)**, and general-purpose registers like **RAX**, **RBX**, **RCX**, etc.
+    - The registers hold critical information about the task’s execution state
+    - Saving and restoring these registers is essential for the task to resume correctly
+  - Each task has its own set of registers, so when switching, the current set of registers needs to be saved to avoid overwriting the task's data.
   - **Program Counter (PC)**: The program counter stores the address of the next instruction that the CPU will execute. This allows the task to resume from the exact point it was interrupted.
   - **Stack Pointer (SP)**: The stack pointer tracks the task’s current position on its stack. The stack is used to store function calls, local variables, and return addresses. This ensures that when Task A resumes, its function calls and local variables are intact.
   - **Additional Context**: In some cases, the kernel may also save the task’s floating-point or vector registers if the task uses advanced CPU features like SIMD instructions (e.g., for mathematical computations).
 
 - **Where the state is saved**: The saved context is typically stored in memory within **task_struct** (or **thread_info**) structures. These are kernel-managed data structures that represent each task. Each task has its own `task_struct`, which contains information like the saved CPU registers, process IDs, the task’s scheduling details, and more.
+
+### TO DO: ^^ What are the commands to see the task struct?? ^^ 
 
 ---
 
@@ -37,9 +43,9 @@ We’ll walk through a context switch in a Linux system where the kernel switche
 
 - **Scheduler’s Decision**: After saving Task A’s state, the scheduler selects the next task to run. In this case, it chooses **Task B**.
   - The decision could be based on Task B’s priority (if it’s a higher-priority task) or because Task B has become ready to run (for example, after waiting for some resource).
-  - The scheduler uses **scheduling policies** to decide which task gets the CPU next, balancing fairness with efficiency. Common algorithms include **round-robin scheduling**, **priority-based scheduling**, and **multilevel feedback queues**.
+  - The **scheduler** uses **scheduling policies** to decide which task gets the CPU next, balancing fairness with efficiency. Common algorithms include **round-robin scheduling**, **priority-based scheduling**, and **multilevel feedback queues**.
 
-- **Choosing the Next Task Efficiently**: The scheduler maintains a list (or queue) of ready tasks. It selects the next task based on priority and other factors, minimizing wasted CPU time. The kernel uses **preemptive multitasking**, meaning the scheduler can interrupt and switch tasks at any time (even within the middle of a task’s execution).
+- **Choosing the Next Task Efficiently**: The **scheduler** maintains a list (or queue) of ready tasks. It selects the next task based on priority and other factors, minimizing wasted CPU time. The kernel uses **preemptive multitasking**, meaning the scheduler can interrupt and switch tasks at any time (even within the middle of a task’s execution).
 
 ---
 
