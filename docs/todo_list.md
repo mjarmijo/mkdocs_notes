@@ -1,4 +1,8 @@
 # TO DO
 
-- Need to solve `["Error: Kubernetes cluster unreachable: Get \"https://192.168.1.52:6443/version\": dial tcp 192.168.1.52:6443: connect: no route to host"]`, while running: `ansible-playbook -i nuc_inventory --extra-vars '@passwd.yml' playbooks/k8s_resources.yml -vv`
-- Update ansible with new ip addresses of the nucs and rerun the ansible code, see if that makes kubectl work
+- cards game - make interactive game for users, write out sequence diagram for initializing a game and test
+- k8s - expose mkdocs_notes on a local endpoint
+- k8s - write notes on manfiests, control plane, network
+- linux - write notes on IPC, context switching, memory/virtual memory
+- Finish Ruby book on OOP
+- 

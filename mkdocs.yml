@@ -6,6 +6,10 @@ theme:
     scheme: slate
     primary: green
     accent: deep purple
+  features:
+    - navigation.footer
+    # - navigation.tabs
+
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -15,3 +19,8 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+
+extra:
+    social:
+      - icon: fontawesome/brands/mastodon 
+        link: https://fosstodon.org/@squidfunk
