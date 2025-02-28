@@ -14,4 +14,9 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
     mkdocs.yml    # The configuration file.
     docs/
         index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+        ...       # Other markdown pages, images and other files
+
+Good links:
+Feature overview material for mkdocs: <https://jameswillett.dev/getting-started-with-material-for-mkdocs/#share-on-socials>
+
+Material for MKdocs: https://squidfunk.github.io/mkdocs-material/getting-started/
