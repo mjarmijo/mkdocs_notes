@@ -1,19 +1,34 @@
 # Context Switching in Operating Systems: A Detailed Explanation
 
-Let's dive into more detail and break down each key component of the context switch process, touching on the isolation of tasks, security measures, and how the kernel efficiently handles task switching.
+How does the kernel handle context switching efficiently.
 
 ## Scenario: Context Switch Between Task A and Task B
 
-We’ll walk through a context switch in a Linux system where the kernel switches from **Task A** to **Task B**. We'll add more details about each step, explain the role of isolation and security, and look at how the kernel optimizes the process for efficiency.
+I walk through a context switch in a Linux system where the kernel switches from **Task A** to **Task B**
+
+Focus:
+
+- Kernal's role in managing context switches
+- Isolation and security between tasks
 
 ---
 
 ### Step-by-Step Walkthrough
 
+Key components:
+
+Scheduler: what is the scheduler in linux?: The scheduler is an operating system component that determines which tasks run on the CPU and when the tasks run. It is responsible for managing the CPU’s time efficiently and fairly. The scheduler uses various algorithms to decide what is fair (i.e. which task to run next), based on factors like task priority, time slices (i.e. alloted time), and other scheduling policies.
+
+Process control block: The Process Control Block (PCB) is a data structure used by the operating system to manage information about a process. It contains information such as the process ID, process state (i.e. stack pointer), the next instruction to execute (i.e. program counter), CPU registers, and other details needed to manage and control the process.
+
+Program Counter: The program counter (PC) is a register in the CPU that stores the address of the next instruction to be executed. It is a key component in the context switch process, as it determines where the CPU should resume execution for a seamless transition. During a context switch, the Program counter is saved and restored to ensure that the task resumes execution correctly.
+
+Stack pointer: The stack pointer (SP) is a register in the CPU that points to the top of the stack. The stack is used to store function calls, local variables, and return addresses. During a context switch, the stack pointer is saved and restored to ensure that the task resumes execution correctly.
+
+
 #### 1. **Triggering the Context Switch**
 
-- **When it happens**: A context switch is triggered when the operating system decides that the currently running task (Task A) has either used up its allotted time (called a "time slice"), needs to wait for some I/O operation, or is blocked for some other reason (e.g., waiting for a resource to become available).
-  - This can also happen when a higher-priority task becomes ready to run or when an interrupt occurs (like a hardware interrupt from a device).
+- **When it happens**: A context switch is triggered when the operating system decides that the currently running task (Task A) has either used up its time slice, is waiting for some I/O operation, or is blocked for some other reason (e.g., waiting for a resource to become available). Switching also happen when a higher-priority task becomes ready to run or when an interrupt occurs (like a hardware interrupt from a device).
 
 - **The Role of the Scheduler**: The kernel’s **scheduler** decides when a context switch happens. The scheduler’s role is to ensure fair distribution of CPU time among tasks and to respect their priority levels. It decides which task should run next based on factors like task priority, time slices, and other internal scheduling algorithms (e.g., round-robin, priority-based scheduling).
 
