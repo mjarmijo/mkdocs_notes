@@ -25,14 +25,11 @@ Program Counter: The program counter (PC) is a register in the CPU that stores t
 
 Stack pointer: The stack pointer (SP) is a register in the CPU that points to the top of the stack. The stack is used to store function calls, local variables, and return addresses. During a context switch, the stack pointer is saved and restored to ensure that the task resumes execution correctly.
 
-
 #### 1. **Triggering the Context Switch**
 
 - **When it happens**: A context switch is triggered when the operating system decides that the currently running task (Task A) has either used up its time slice, is waiting for some I/O operation, or is blocked for some other reason (e.g., waiting for a resource to become available). Switching also happen when a higher-priority task becomes ready to run or when an interrupt occurs (like a hardware interrupt from a device).
 
 - **The Role of the Scheduler**: The kernel’s **scheduler** decides when a context switch happens. The scheduler’s role is to ensure fair distribution of CPU time among tasks and to respect their priority levels. It decides which task should run next based on factors like task priority, time slices, and other internal scheduling algorithms (e.g., round-robin, priority-based scheduling).
-
----
 
 #### 2. **Saving Task A’s State**
 
@@ -50,7 +47,7 @@ Stack pointer: The stack pointer (SP) is a register in the CPU that points to th
 
 - **Where the state is saved**: The saved context is typically stored in memory within **task_struct** (or **thread_info**) structures. These are kernel-managed data structures that represent each task. Each task has its own `task_struct`, which contains information like the saved CPU registers, process IDs, the task’s scheduling details, and more.
 
-### TO DO: ^^ What are the commands to see the task struct?? ^^ 
+### TO DO: ^^ What are the commands to see the task struct?? ^^
 
 ---
 

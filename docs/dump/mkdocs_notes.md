@@ -19,4 +19,4 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 Good links:
 Feature overview material for mkdocs: <https://jameswillett.dev/getting-started-with-material-for-mkdocs/#share-on-socials>
 
-Material for MKdocs: https://squidfunk.github.io/mkdocs-material/getting-started/
+Material for MKdocs: <https://squidfunk.github.io/mkdocs-material/getting-started/>
