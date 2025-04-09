@@ -13,6 +13,7 @@ Focus:
 
 ---
 
+
 ### Step-by-Step Walkthrough
 
 Key components:
@@ -41,6 +42,7 @@ Stack pointer: The stack pointer (SP) is a register in the CPU that points to th
     - The registers hold critical information about the task’s execution state
     - Saving and restoring these registers is essential for the task to resume correctly
   - Each task has its own set of registers, so when switching, the current set of registers needs to be saved to avoid overwriting the task's data.
+  - See here for more [info on CPU Registers](https://www.totalphase.com/blog/2023/05/what-is-register-in-cpu-how-does-it-work/)
   - **Program Counter (PC)**: The program counter stores the address of the next instruction that the CPU will execute. This allows the task to resume from the exact point it was interrupted.
   - **Stack Pointer (SP)**: The stack pointer tracks the task’s current position on its stack. The stack is used to store function calls, local variables, and return addresses. This ensures that when Task A resumes, its function calls and local variables are intact.
   - **Additional Context**: In some cases, the kernel may also save the task’s floating-point or vector registers if the task uses advanced CPU features like SIMD instructions (e.g., for mathematical computations).

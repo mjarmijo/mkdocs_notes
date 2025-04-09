@@ -63,3 +63,5 @@ Problems:
 What if all the replicas and leaders die?
 
 - This is a simple tradeoff between availability and consistency. If we wait for replicas in the ISR, then we will remain unavailable as long as those replicas are down. If such replicas were destroyed or their data was lost, then we are permanently down. If, on the other hand, a non-in-sync replica comes back to life and we allow it to become leader, then its log becomes the source of truth even though it is not guaranteed to have every committed message. By default from version 0.11.0.0, Kafka chooses the first strategy and favor waiting for a consistent replica.
+
+Look over log compaction then done: 4.8: <https://kafka.apache.org/documentation/#design>
