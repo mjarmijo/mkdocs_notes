@@ -36,7 +36,7 @@ A process can be in one of several different states at a given time:
 - Ready: A process is ready to run, but the OS is choosing not to run it at this moment.
 - Blocked: A process has performed some kind of operation that makes it not ready until another event takes place. For example, when a process initiates I/O requests to disk, it is blocked and another process can use the processor. Once I/O completes (or some other event causing blocking, like waiting on a network packet) the process is moved to Ready.
 
-Scheduling: Being moved from ready to running means the process has been scheduled. Moved from running to ready means the process has been descheduled. Decsions on which processes to run and when are made by the Scheduler. 
+Scheduling: Being moved from ready to running means the process has been scheduled. Moved from running to ready means the process has been descheduled. Decsions on which processes to run and when are made by the Scheduler.
 
 ## Data Structures
 
@@ -44,4 +44,4 @@ The OS has key data structures that track various pieces of process information,
 
 Process control block (PCB): The structure that stores information about a given process (program counter, stack pointer, PID etc)
 
-What is stored in the Process control block:
+![Process control block](./images/process-control-block.png)
