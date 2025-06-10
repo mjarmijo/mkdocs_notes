@@ -27,3 +27,21 @@ Process creation
 3. Each process has three open file descriptors for standard input, standard output and standard error. The OS must set these up so that the process can read input from the terminal and write output to the screen.
 4. Finally the OS will start the program running at the entry point `main()` and the transfer control of the CPU to the process to begin execution.
 5. The OS will also set up the process control block (PCB) which contains all the information about the process, including its state, memory usage, open files, and other resources.
+
+## Process states
+
+A process can be in one of several different states at a given time:
+
+- Running: a process is running on the processesor and executing instructions
+- Ready: A process is ready to run, but the OS is choosing not to run it at this moment.
+- Blocked: A process has performed some kind of operation that makes it not ready until another event takes place. For example, when a process initiates I/O requests to disk, it is blocked and another process can use the processor. Once I/O completes (or some other event causing blocking, like waiting on a network packet) the process is moved to Ready.
+
+Scheduling: Being moved from ready to running means the process has been scheduled. Moved from running to ready means the process has been descheduled. Decsions on which processes to run and when are made by the Scheduler. 
+
+## Data Structures
+
+The OS has key data structures that track various pieces of process information, such as the state of each process. The OS keeps a process list (aka task list) for all ready processes, blcoked processes, When a processes is blocked the contents of the process's registers must be saved to memory. When the process resumes the registers are restored by moving them from memory to the physical registers on the CPU so the process resumes. This is called a context switch.
+
+Process control block (PCB): The structure that stores information about a given process (program counter, stack pointer, PID etc)
+
+What is stored in the Process control block:
