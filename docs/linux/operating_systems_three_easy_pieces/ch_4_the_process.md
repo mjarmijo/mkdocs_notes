@@ -4,7 +4,7 @@ A **process** is a running program. A program is a bunch of instructions on disk
 
 How does the OS provide the illusion of many CPUs?
 
-The OS creates the illusion of many CPUs by virtualizing the CPU. By running one process, then quickly stopping and running another, the OS can create an illusion that dozens of CPUs exist when in fact there is one (or a few). This techinque is known as **time sharing the CPU.**
+The OS creates the illusion of many CPUs by virtualizing the CPU. By running one process, then quickly stopping and running another, the OS can create an illusion that dozens of CPUs exist when in fact there is one (or a few). This technique is known as **time sharing the CPU.**
 
 **Mechanisms** are the low-level methods and protocols that implement a piece of functionality. For example, a context switch gives the OS the ability to stop running one program and start running another on a given CPU.
 
@@ -18,7 +18,7 @@ One important component of state include its machine state, which is made up of 
 
 ## The process API
 
-Process APIs include system calls to create and destroy processes and manage them. Examples include `fork()`, `exec()`, `wait()` and `exit()`. Other management tasks include getting status information and other controls suche as suspending and resuming the process.
+Process APIs include system calls to create and destroy processes and manage them. Examples include `fork()`, `exec()`, `wait()` and `exit()`. Other management tasks include getting status information and other controls such as suspending and resuming the process.
 
 Process creation
 
@@ -32,15 +32,15 @@ Process creation
 
 A process can be in one of several different states at a given time:
 
-- Running: a process is running on the processesor and executing instructions
+- Running: a process is running on the processor and executing instructions
 - Ready: A process is ready to run, but the OS is choosing not to run it at this moment.
 - Blocked: A process has performed some kind of operation that makes it not ready until another event takes place. For example, when a process initiates I/O requests to disk, it is blocked and another process can use the processor. Once I/O completes (or some other event causing blocking, like waiting on a network packet) the process is moved to Ready.
 
-Scheduling: Being moved from ready to running means the process has been scheduled. Moved from running to ready means the process has been descheduled. Decsions on which processes to run and when are made by the Scheduler.
+Scheduling: Being moved from ready to running means the process has been scheduled. Moved from running to ready means the process has been descheduled. Decisions on which processes to run and when are made by the Scheduler.
 
 ## Data Structures
 
-The OS has key data structures that track various pieces of process information, such as the state of each process. The OS keeps a process list (aka task list) for all ready processes, blcoked processes, When a processes is blocked the contents of the process's registers must be saved to memory. When the process resumes the registers are restored by moving them from memory to the physical registers on the CPU so the process resumes. This is called a context switch.
+The OS has key data structures that track various pieces of process information, such as the state of each process. The OS keeps a process list (aka task list) for all ready processes, blocked processes, When a processes is blocked the contents of the process's registers must be saved to memory. When the process resumes the registers are restored by moving them from memory to the physical registers on the CPU so the process resumes. This is called a context switch.
 
 Process control block (PCB): The structure that stores information about a given process (program counter, stack pointer, PID etc)
 
