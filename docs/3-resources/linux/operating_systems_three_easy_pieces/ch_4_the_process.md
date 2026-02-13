@@ -44,4 +44,4 @@ The OS has key data structures that track various pieces of process information,
 
 Process control block (PCB): The structure that stores information about a given process (program counter, stack pointer, PID etc)
 
-![Process control block](./images/process-control-block.png)
+![Process control block](process-control-block.png)
