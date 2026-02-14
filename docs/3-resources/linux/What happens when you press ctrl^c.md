@@ -1,4 +1,4 @@
-
+[[Linux]]
 # What happens when you press CRTL^C?
 
 When you press Ctrl-C on your local machine, the kernel sends a SIGINT signal (Signal interrupt)  to the foreground process group of the terminal. The terminal driver is responsible for translating key presses into signals and passing them to the correct process group. The default action for SIGINT is to terminate the process, but the process can catch the signal and handle it in a custom way.

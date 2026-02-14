@@ -1,4 +1,4 @@
-
+[[Linux]]
 ## /etc/hosts file
 
 - ip-hostname pairs

@@ -5,4 +5,4 @@ community plugins:
 - https://github.com/mnaoumov/obsidian-custom-attachment-location
 
 
-[[Obsidian plugins]]
+[[Obsidian]]

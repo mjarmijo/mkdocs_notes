@@ -39,11 +39,16 @@ Archive
 	- Projects you’ve completed or put on hold
 	- Areas that are no longer active or relevant
 	- Resources that you’re no longer interested in
-- https://fortelabs.com/blog/para/
+
+Links:
+https://fortelabs.com/blog/para/
+
 [[PARA Notes]]
 
-![[file-20260213070817302.png]]
 
-![[file-20260213070817299.png]]
 
-![[file-20260213070817321.pdf]]
+![[Pasted image 20260213201337.png]]
+
+![[Pasted image 20260213201352.png]]
+
+![[The PARA Method_ The Simple System for Organizing Your Digital Life in Seconds.pdf]]

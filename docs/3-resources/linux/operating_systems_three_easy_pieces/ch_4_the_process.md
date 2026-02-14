@@ -1,3 +1,6 @@
+
+[[Linux]]
+[[ostep]]
 # The Process
 
 A **process** is a running program. A program is a bunch of instructions on disk. The operating system gets these running and transforms the program into something useful.

@@ -1,3 +1,7 @@
+
+[[Linux]]
+[[ostep]]
+
 # ch 13 address spaces
 
 Goal is to leave proceses in memory while switching between them in order to allow the OS to implement time sharing efficiently. Don't save memory to disk, it is too slow.

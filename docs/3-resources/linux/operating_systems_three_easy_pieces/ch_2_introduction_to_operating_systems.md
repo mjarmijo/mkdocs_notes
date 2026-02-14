@@ -1,3 +1,8 @@
+
+[[Linux]]
+[[ostep]]
+
+
 # Chapter 2 Introduction to Operating Systems
 
 A running program executes instructions.
