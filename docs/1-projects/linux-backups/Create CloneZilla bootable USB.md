@@ -1,22 +1,28 @@
+[[Linux]]
+[[backups]]
+
 
 To back up Ubuntu with Clonezilla, first create a bootable Clonezilla USB drive. Boot your computer from the USB, then select the "device-image" option and choose your local device (the external hard drive) as the destination. Next, select the source disk containing your system and start the backup process. 
 
-1. Download [Clonezilla](https://clonezilla.org/downloads.php) ISO from the website.
+1. Download [Clonezilla](https://clonezilla.org/downloads/download.php?branch=stable) ISO from the website.
 2. Insert your USB drive
 3. Identify your USB device name 
 	1. Use the `lsblk` or `sudo fdisk -l` commands to identify your device name (e.g. `/dev/sdX*`). Selection the wrong device can lead to data loss! 
-	   ```bash
-		 lsblk
-		 ```
-	- `lsblk`: List block devices information
+
+
+```bash
+lsblk
+```
+
+- `lsblk`: List block devices information
 	   ![[clonezilla_lsblk.png]]
 	   ```bash
 	     $ sudo fdisk -l | grep -i dev
 	     ```
 	- `fdisk` = create and manipulate partition tables. Block devices can be divided one or more logical disks called partitions. 
-	- `-l` = list the partition tables for a device
+ `-l` = list the partition tables for a device
 		![[clonezilla_fdisk_device_name.png]]
-4. Unmount the USB drive
+5. Unmount the USB drive
    ```bash
    df -h
    sudo umount /dev/SDX*
@@ -50,9 +56,7 @@ To back up Ubuntu with Clonezilla, first create a bootable Clonezilla USB drive.
 8. Boot your computer from the USB, then select the "device-image" option and choose your local device (the external hard drive) as the destination. Next, select the source disk containing your system and start the backup process. 
    
 
-
-
-
+```bash
 df -h
  1949  pwd`
  1950  dd if=/home/linux-joe/Downloads/clonezilla-live-3.3.0-33-amd64.iso of=/media/linux-joe/78E0-F73B/ status=PROGESS
@@ -104,3 +108,5 @@ df -h
  1996  stat clonezilla-live-3.3.0-33-amd64.iso 
  1997  man stat
  1998  df -h
+```
+
