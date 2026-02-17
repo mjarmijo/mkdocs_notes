@@ -5,7 +5,7 @@
 
 Guide to type checking in Python
 
-Recent versions of Python allow you to specify explicit type hints that can be used by different tools to help you develop your code more efficiently.
+Type hints in python help you to define what what objects should be (string, dict, list) and allow you to use tools that check your code to make sure it is consistent when it runs. 
 
 **In this tutorial, you’ll learn about the following:**
 
