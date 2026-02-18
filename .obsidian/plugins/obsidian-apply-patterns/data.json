@@ -1,0 +1,45 @@
+{
+  "patterns": [
+    {
+      "name": "wikilinks image replace",
+      "rules": [
+        {
+          "from": "!\\[\\[(.+?)\\.(png|jpg|jpeg|bmp|gif)\\]\\]",
+          "to": "![]($1.$2)",
+          "caseInsensitive": false,
+          "global": false,
+          "multiline": false,
+          "sticky": false,
+          "disabled": false
+        }
+      ],
+      "collapsed": false,
+      "cursorRegexStart": "$",
+      "cursorRegexEnd": "^"
+    },
+    {
+      "name": "",
+      "rules": [],
+      "collapsed": false,
+      "cursorRegexStart": "$",
+      "cursorRegexEnd": "^"
+    }
+  ],
+  "filterString": "",
+  "commandFilterString": "",
+  "commands": [
+    {
+      "name": "",
+      "icon": "search",
+      "patternFilter": "",
+      "selection": true,
+      "lines": true,
+      "document": true,
+      "clipboard": false,
+      "clipboardLines": false
+    }
+  ],
+  "apiVersion": 6,
+  "defaultCursorRegexEnd": "^",
+  "defaultCursorRegexStart": "$"
+}
