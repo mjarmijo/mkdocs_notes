@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "0330501fd0f2a213",
+        "id": "9fbe5a0db594d8c3",
         "type": "tabs",
         "children": [
           {
-            "id": "276350355689b25f",
+            "id": "e1c4dbaa267ae502",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "docs/0-inbox/AI notes/Claude Intro.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Claude Intro"
             }
           }
         ]
@@ -180,12 +184,14 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "276350355689b25f",
+  "active": "e1c4dbaa267ae502",
   "lastOpenFiles": [
+    "templates/Zettel template.md",
+    "docs/0-inbox/AI notes/Claude Intro.md",
+    "docs/0-inbox/AI notes/assets/Claude Intro/Pasted image 20260218065436.png",
     "docs/2-areas/Obsidian/Obsidian plugins.md",
     "docs/2-areas/Homelab/Homelab with kubernetes, MetalLB and BGP.md",
     "README.md",
-    "templates/Zettel template.md",
     "venv/lib/python3.12/site-packages/idna-3.10.dist-info/LICENSE.md",
     "docs/0-inbox/ZettleKasten method overview.md",
     "Zettlekasten - how to take notes.md",
@@ -194,7 +200,6 @@
     "docs/3-resources/Untitled.md",
     "Untitled 1.md",
     "docs/0-inbox/todo_list.md",
-    "docs/0-inbox/AI notes/Claude Intro.md",
     "Untitled 1",
     "Untitled",
     "templates",
@@ -221,12 +226,10 @@
     "docs/3-resources/python/assets/Resy Bot reservation scraper",
     "docs/3-resources/python/assets/Resy Bot reservation scraper/Pasted image 20260215065715.png",
     "docs/index.md",
-    "docs/2-areas/Obsidian/Obsidian Shortcuts.md",
     "docs/1-projects/linux-backups/assets/Create CloneZilla bootable USB/clonezilla_checksum 1.png",
     "docs/1-projects/linux-backups/assets/Create CloneZilla bootable USB/clonezilla_fdisk_device_name 1.png",
     "docs/1-projects/linux-backups/assets/Create CloneZilla bootable USB/clonezilla_umount 1.png",
     "docs/1-projects/linux-backups/assets/Create CloneZilla bootable USB/clonezilla_lsblk 1.png",
-    "docs/1-projects/linux-backups/assets/Create CloneZilla bootable USB/clonezilla_checksum.png",
-    "docs/1-projects/linux-backups/assets/Create CloneZilla bootable USB/clonezilla_fdisk_device_name.png"
+    "docs/1-projects/linux-backups/assets/Create CloneZilla bootable USB/clonezilla_checksum.png"
   ]
 }

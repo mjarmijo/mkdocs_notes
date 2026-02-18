@@ -111,7 +111,40 @@ Projects automatically scale to handle large amounts through a feature called Re
 - **Group related documents.** This helps Claude draw connections between different sources and provide more comprehensive responses.
 - **Reference documents by name.** When asking questions, you can mention specific documents to help Claude focus its search: "Based on our Q3 report, what were the top customer concerns?"
 
+## Skills
+- Skills allow Claude to perform specialized, repeatable tasks - they are instructions, scripts and resources that are loaded automatically when needed. 
+- Project store knowledge and context, Skills perform tasks.
+- The two features complement each other. A skill can reference knowledge stored in a project—your "customer call prep" skill might pull from customer profiles uploaded to a project's knowledge base. The project provides the _what_ (information), the skill provides the _how_ (process).
+- Skills to create excel, PowerPoint, word doc, PDFs etc. 
+- Two types: Anthropic and custom
+	- Anthropic are available to paid users and created/maintained by Anthropic --> document creation capabilities
+	- Custom - you create for workflows or domain specific tasks. e.g. structure notes in a format, data analysis workflow, or apply guidelines to documents. 
+	- Skills are steps and order of operations you want followed every time
+	- Enable skills by first enabling `Code execution and file creation`
+	- settings --> capabilities --> code execution and file creation --> scroll to skills and turn them off/on as needed. You also need to `allow limited network access` for Claude to edit any files that you upload. 
+	- Custom skills will be listed in your settings, too
+		-  Create an Excel spreadsheet tracking monthly expenses with formulas for totals"
+		- "Turn this meeting notes document into a PowerPoint presentation"
+		- "Generate a PDF report summarizing this data"
+		- "Build a financial model in Excel with scenario analysis"
+- You can upload your own files and have Claude update them. 
+- Security - If you're installing a custom Skill from an external source, review its contents before use to understand what it does.
+### Creating your own custom skills
+- Create custom skills through a conversation with Claude
+- Start a new chat and say, "I want to create a skill that does X"
+- Claude will interview you about workflow, what it should do, what makes good output, and when you use the skill
+- Upload any reference materials, guides, work examples, brand assets to help Claude understand
+- Claude will create a skill for your to download as a ZIP file
+- Upload it to your settings --> capabilities
+- The custom skill will automatically be invoked when needed 
+
+![[Pasted image 20260218065436.png]]
+
+## Connectors
+
 Links:
 [Anthropic academy](https://www.anthropic.com/learn)
 
 [Claude code in action](https://anthropic.skilljar.com/Claude-code-in-action)
+
+<% tp.date.now("YYYY-MM-DD-HHmm") %>
