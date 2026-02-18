@@ -15,13 +15,13 @@ lsblk
 ```
 
 - `lsblk`: List block devices information
-	   ![[clonezilla_lsblk.png]]
+	   ![clonezilla_lsblk](clonezilla_lsblk.png)
 	   ```bash
 	     $ sudo fdisk -l | grep -i dev
 	     ```
 	- `fdisk` = create and manipulate partition tables. Block devices can be divided one or more logical disks called partitions. 
  `-l` = list the partition tables for a device
-		![[clonezilla_fdisk_device_name.png]]
+		![clonezilla_fdisk_device_name](clonezilla_fdisk_device_name.png)
 5. Unmount the USB drive
    ```bash
    df -h
@@ -29,7 +29,7 @@ lsblk
    ```
    - `df` = displays the amount of space on the file system
    - `umount` = detach a file system
-	![[clonezilla_umount.png]]
+	![clonezilla_umount](clonezilla_umount.png)
 5. Write the ISO to the USB drive using dd. Once completed you can boot from the USB. 
    ```bash
    sudo dd if=/home/linux-joe/Downloads/clonezilla-live-3.3.0-33-amd64.iso of=/dev/sdc1 status=progress bs=4M && sync
@@ -48,7 +48,7 @@ lsblk
     - **`"-c" <size>`**: This option tells `head` to output only the first `<size>` bytes of the input. The `<size>` placeholder is replaced by the exact size (in bytes) of the original ISO file. This is the crucial part that ensures only the relevant data (the image itself, not any potential extra data or padding on the USB drive) is read for the checksum calculation.
     - **`/dev/sdX`**: This is the device path for your USB drive .
     - **`sha256sum`**: Calculates and outputs the SHA256 cryptographic hash (checksum) of the data it receives through standard input
-      ![[clonezilla_checksum.png]]
+      ![clonezilla_checksum](clonezilla_checksum.png)
 7. If the checksums match, then eject the USB
    ```bash
    sudo eject /dev/sdX*

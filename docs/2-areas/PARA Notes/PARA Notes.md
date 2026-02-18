@@ -47,8 +47,8 @@ https://fortelabs.com/blog/para/
 
 
 
-![[Pasted image 20260213201337.png]]
+![Pasted image 20260213201337](Pasted%20image%2020260213201337.png)
 
-![[Pasted image 20260213201352.png]]
+![Pasted image 20260213201352](Pasted%20image%2020260213201352.png)
 
 ![[The PARA Method_ The Simple System for Organizing Your Digital Life in Seconds.pdf]]

@@ -9,7 +9,7 @@ Restaurant Reservation Automation Bot with Retool Workflows for a Concierge Serv
 
 A white glove service company was tired of manually reserving tables for a large base of customers at the best fine dining restaurants in the United States. We built a game changing solution for them: an automated bot that books restaurant reservations using Retool and the RESY API. Let's dive into how it works.
 
-![[Pasted image 20260215065715.png]]
+![Pasted image 20260215065715](Pasted%20image%2020260215065715.png)
 
 ### Step 1: Obtaining the RESY API Key
 

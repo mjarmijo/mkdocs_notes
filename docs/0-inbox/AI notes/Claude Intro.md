@@ -23,7 +23,7 @@ Claude for excel - work directly with Claude in excel where it can read, analyze
 - Upload documents or background information so Claude can consider it in response - it's a shortcut to help Claude understand your needs
 	- Uploading documents are a shortcut to helping Claude understand your needs
 	- pdf, csv, docs, txt, PNG, JPEG, web search, data sources like drive, calendar etc. and Claude will parse the content
-- ![[Pasted image 20260216070623.png]]
+- ![Pasted image 20260216070623](Pasted%20image%2020260216070623.png)
 - organize your conversations into **projects** with persistent context
 - **Artifacts** turn your ideas into shareable objects
 - Improve the responses you are getting by asking follow up questions, providing feedback (Can you expand on the second point?" or "That's helpful, but can you make it more concise?") about what is good/bad ("This is good, but the tone is too formal. Can you make it more conversational?"), and redirecting it/restarting your conversation. 
@@ -34,7 +34,7 @@ Claude for excel - work directly with Claude in excel where it can read, analyze
 - **Description:** Effectively communicating with AI systems. Includes clearly defining outputs, guiding AI processes, and specifying desired AI behaviors and interactions.
 - **Discernment:** Thoughtfully and critically evaluating AI outputs, processes, behaviors and interactions. Includes assessing quality, accuracy, appropriateness, and determining areas for improvement.
 - **Diligence:** Using AI responsibly and ethically. Includes making thoughtful choices about AI systems and interactions, maintaining transparency, and taking accountability for AI-assisted work.
-![[Pasted image 20260216190349.png]]
+![Pasted image 20260216190349](Pasted%20image%2020260216190349.png)
 
 Effective Claude users:
 
@@ -64,7 +64,7 @@ To evaluate how Claude might work with your data reproduce a past analysis you'v
 - Create prompts that request Claude to do the analysis on your behalf
 - Compare Claude's results to your originals
 - Note patterns and refine your prompt accordingly: Maybe Claude gets the right numbers but misses the overall patterns
-![[Pasted image 20260216191243.png]]
+![Pasted image 20260216191243](Pasted%20image%2020260216191243.png)
 
 ## Projects
 - **Projects are self-contained workspaces** with their own memory, chat histories, knowledge bases, and customized instructions. Think of them as dedicated environments for specific work streams. Each conversation within the project automatically has access to your knowledge base and follows your project instructions.
@@ -138,7 +138,7 @@ Projects automatically scale to handle large amounts through a feature called Re
 - Upload it to your settings --> capabilities
 - The custom skill will automatically be invoked when needed 
 
-![[Pasted image 20260218065436.png]]
+![Pasted image 20260218065436](Pasted%20image%2020260218065436.png)
 
 ## Connectors
 
