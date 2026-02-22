@@ -1,3 +1,8 @@
+[[mcp]]
+[[claude]]
+[ai agents](ai%20agents)
+
+
 ## Claude models
 opus 4.5 - use for complex tasks
 sonnet 4.5 - use for everyday tasks. Has an extended thinking mode for deeper reasoning. Works through problems step by step making it suited for tasks using careful analysis.
@@ -141,6 +146,39 @@ Projects automatically scale to handle large amounts through a feature called Re
 ![Pasted image 20260218065436](Pasted%20image%2020260218065436.png)
 
 ## Connectors
+- Give Claude access to tools and information you use every day
+- Enabling connectors allows Claude to search files, analyze documents and data, create and update content, and execute tasks from within your conversation
+- MCP (model context protocol) powers connectors. MCP allows Claude to connect to many different applications from a single consistent interface. 
+- Two types of connectors - web and desktop. Web gives access to internet and cloud services, while desktop allows access to local files, browser control, and applications. 
+- Find connectors on claude.ai/directory. Add connectors by clicking on the `Search and Tools --> connectors` in the chat window
+- Security and access - you can toggle off/on certain permissions within each connector to give or revoke access as needed. 
+
+## Enterprise Search
+- used for finding information and data across your organization
+- "ask your ORGNAME" option appears in the sidebar
+- ask Claude about what happened recently, policies and procedures, research, analysis and work projects
+- Claude searches sharepoint, email, docs, and slack to craft a response and cites its sources
+- Admins must set up enterprise search, (enabled default, but it must be configured) then users authenticate with their accounts
+- Users can only access what they already have permission for in their personal accounts, connected data stays private, it isn't stored or indexed by Claude
+
+## Research mode
+- Claude conducts multiple searches from different angles to give an in-depth, systematic answer to your question --> agentic searching as an assistant instead of simple search
+- Research takes Claude 4 to 45 minutes to complete. It uses extended thinking to plan and break tasks into manageable chunks.
+- Claude provides citations to make fact checking easier. 
+- Research pulls information from multiple sources, compares different perspectives, and synthesizes findings in a way that enables you to act on them. 
+- Use research for comparative analysis and comprehensive reports that use multiple sources (web, enterprise workspaces), and quick response speed isn't necessary.  Claude can pull from your integrated tools (email, documents, slack) 
+- Extended thinking is best for mathematical problems, code debugging, or logical analysis instead of just information gathering. 
+- plan --> search multiple sources --> synthesize --> cite
+- Enable research by clicking the `research` button on the chat interface and web search must be enabled in the tools settings for research to work
+- Ask Claude to help you craft a good research prompt.  Your prompt should contain your goals, the structure/sections you want and any requirements/constraints you may have. 
+- 
+ > 		Tell me about the EV market," try "Analyze the electric vehicle battery market—identify key players, technology trends, and supply chain challenges that might affect investment decisions."
+		 
+		 
+ > 		"Compare venue options for a team offsite including: location and accessibility, meeting space and amenities, catering options, and pricing considerations."
+ 
+ 
+
 
 Links:
 [Anthropic academy](https://www.anthropic.com/learn)

@@ -1,4 +1,4 @@
-## Tags
+## Links
 
 
 ## 3 Key Points
@@ -12,8 +12,7 @@
 ## Further Reading
 
 
-## Links:
-
+## Tags
 
 
 <% tp.date.now("YYYY-MM-DD-HHmm") %>
