@@ -1,5 +1,5 @@
 ## Links
-
+[Private attributes and methods](Private%20attributes%20and%20methods.md)
 [python](python)
 [oop](oop)
 

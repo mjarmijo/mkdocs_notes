@@ -1,7 +1,8 @@
 ## Tags
 [[python]]
 [[oop]]
-[[encapsulation]]
+[Private attributes and methods](Private%20attributes%20and%20methods.md)
+[Public attribute and methods](Public%20attribute%20and%20methods.md)
 
 ## 3 Key Points
 - Public attributes are accessible everywhere

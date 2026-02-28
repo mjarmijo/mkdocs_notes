@@ -7,7 +7,14 @@
 [[Private attributes and methods]]
 [[Getter and setter methods]]
 [[Property and setter decorators]]
-
+[[class attributes]]
+[Class methods](Class%20methods.md)
+[[static methods]]
+[[inheritance]]
+[Method overriding](Method%20overriding.md)
+[Super function](Super%20function.md)
+[Multiple Inheritance](Multiple%20Inheritance.md)
+[Multiple Inheritance - Diamond Problem](Multiple%20Inheritance%20-%20Diamond%20Problem.md)
 
 ## 3 Key Points
 

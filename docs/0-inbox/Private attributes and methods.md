@@ -1,5 +1,7 @@
 ## Links
 [Protected attributes and methods](Protected%20attributes%20and%20methods.md)
+[[python]]
+[[oop]]
 
 ## 3 Key Points
 Private methods:

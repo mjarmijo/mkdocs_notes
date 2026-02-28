@@ -1,4 +1,6 @@
 ## Links
+[[python]]
+[[oop]]
 
 
 ## 3 Key Points

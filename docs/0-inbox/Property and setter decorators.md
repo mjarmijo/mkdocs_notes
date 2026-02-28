@@ -1,5 +1,5 @@
 ## Links
-[Python OOP](Python%20OOP.md)
+[OOP](OOP.md)
 [Getter and setter methods](Getter%20and%20setter%20methods.md)
 ## 3 Key Points
 
