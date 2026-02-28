@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/0-inbox/Super function.md",
+                "file": "docs/0-inbox/Multiple Inheritance.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Super function"
+              "title": "Multiple Inheritance"
             }
           }
         ]
@@ -187,11 +187,11 @@
   "active": "b499f2109767845d",
   "lastOpenFiles": [
     "docs/0-inbox/Multiple Inheritance - Diamond Problem.md",
+    "docs/0-inbox/Super function.md",
     "docs/0-inbox/Multiple Inheritance.md",
     "docs/0-inbox/Method overriding.md",
     "docs/0-inbox/inheritance.md",
     "docs/0-inbox/OOP.md",
-    "docs/0-inbox/Super function.md",
     "docs/0-inbox/encapsulation.md",
     "docs/0-inbox/Getter and setter methods.md",
     "README.md",
