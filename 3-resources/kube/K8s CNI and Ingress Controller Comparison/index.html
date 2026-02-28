@@ -1,0 +1,2864 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://mike-docs.example/3-resources/kube/K8s%20CNI%20and%20Ingress%20Controller%20Comparison/">
+      
+      
+        <link rel="prev" href="../Install_k8s_dash_board_metallb/">
+      
+      
+        <link rel="next" href="../../linux/APT%20commands/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>K8s CNI and Ingress Controller Comparison - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              K8s CNI and Ingress Controller Comparison
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome to Mike's Site
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 inbox
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    0 inbox
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/Class%20methods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Class methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/Getter%20and%20setter%20methods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getter and setter methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/Method%20overriding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Method overriding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/Multiple%20Inheritance%20-%20Diamond%20Problem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multiple Inheritance   Diamond Problem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/Multiple%20Inheritance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multiple Inheritance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/OOP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OOP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/Private%20attributes%20and%20methods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Private attributes and methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/Property%20and%20setter%20decorators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Property and setter decorators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/Protected%20attributes%20and%20methods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protected attributes and methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/Public%20attribute%20and%20methods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public attribute and methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/SSH%20Authentication%20to%20a%20VM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH Authentication to a VM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/Super%20function/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Super function
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/ZettleKasten%20method%20overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ZettleKasten method overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/class%20attributes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Class attributes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/encapsulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encapsulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/inheritance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inheritance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/static%20methods/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Static methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/todo_list/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TO DO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_19" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_19" id="__nav_2_19_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_19">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../0-inbox/AI%20notes/Claude%20Intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1 projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux backups
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux backups
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1-projects/linux-backups/Create%20CloneZilla%20bootable%20USB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create CloneZilla bootable USB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../1-projects/linux-backups/What%20files%20to%20include%20in%20a%20Linux%20backup%3F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What files to include in a Linux backup?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 areas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2 areas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Homelab
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Homelab
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2-areas/Homelab/Homelab%20with%20kubernetes%2C%20MetalLB%20and%20BGP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Homelab with kubernetes, MetalLB and BGP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Obsidian
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Obsidian
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2-areas/Obsidian/Obsidian%20Shortcuts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Obsidian Shortcuts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2-areas/Obsidian/Obsidian%20plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Obsidian plugins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PARA Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PARA Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2-areas/PARA%20Notes/PARA%20Notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PARA Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 resources
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3 resources
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker_commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kube
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kube
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Install_k8s_dash_board_metallb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    To expose the Kubernetes Dashboard using MetalLB, you need to follow a few steps. Here's a guide on how to set it up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    K8s CNI and Ingress Controller Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/APT%20commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    APT commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/Linux%20Boot%20Process/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Boot Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/Submitting%20your%20first%20Kernel%20Patch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Submitting your first Kernel Patch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/What%20happens%20when%20you%20press%20ctrl%5Ec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What happens when you press ctrl^c
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/What%27s%20the%20point%20of%20etc%20hosts%3F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What's the point of etc hosts?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/contex_switching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contex switching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3_8" id="__nav_5_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operating systems three easy pieces
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operating systems three easy pieces
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/operating_systems_three_easy_pieces/ch_13_address_spaces/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ch 13 address spaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/operating_systems_three_easy_pieces/ch_2_introduction_to_operating_systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ch 2 introduction to operating systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/operating_systems_three_easy_pieces/ch_4_the_process/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ch 4 the process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/Claude%20-%20Build%20a%20weather%20MCP%20server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude   Build a weather MCP server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/Pytest%20-%20logging%20and%20capturing%20stdout%20and%20stderr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pytest   logging and capturing stdout and stderr
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/Python%20Asyncio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Asyncio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/Python%20MCP%20Server%20for%20LLMs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python MCP Server for LLMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/Resy%20Bot%20-%20Basic%20reservation%20scraper%20with%20selenium/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resy Bot   Basic reservation scraper with selenium
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/Resy%20Bot%20reservation%20scraper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resy Bot reservation scraper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/Resy%20Grabber%20-%20Restaurant%20reservation%20bot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resy Grabber   Restaurant reservation bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/Type%20Checking%20in%20Python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Type Checking in Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System design
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    System design
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system_design/kafka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Apache Kafka Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4 archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dump
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Dump
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4-archive/dump/mkdocs_notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome to MkDocs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../4-archive/dump/prompts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Useful gpt prompts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>K8s CNI and Ingress Controller Comparison</h1>
+
+<p>[[Kubernetes]]
+[[Ingress controller]]
+[[Metal LB]]</p>
+<p>Can you give me a comparision of k8s CNI flannel, calico, cilium and include ingress controller functionality</p>
+<p>Choosing a CNI depends on whether you value</p>
+<p><strong>simplicity</strong>, <strong>traditional enterprise security</strong>, or <strong>modern eBPF-powered observability</strong>. </p>
+<p><strong>Comparison Overview</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><strong>Flannel</strong></th>
+<th><strong>Calico</strong></th>
+<th><strong>Cilium</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primary Goal</strong></td>
+<td>Simplest L3 networking</td>
+<td>Performance &amp; policy</td>
+<td>Security &amp; observability</td>
+</tr>
+<tr>
+<td><strong>Technology</strong></td>
+<td>VXLAN, UDP, Host-GW</td>
+<td>BGP, IPIP, VXLAN, eBPF</td>
+<td>eBPF</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>None (Basic connectivity)</td>
+<td>L3/L4 Network Policies</td>
+<td>L3–L7 Policies + Identity</td>
+</tr>
+<tr>
+<td><strong>Performance</strong></td>
+<td>High (Low overhead)</td>
+<td>High (Direct routing)</td>
+<td>High (Bypasses iptables)</td>
+</tr>
+<tr>
+<td><strong>Complexity</strong></td>
+<td>Very Low</td>
+<td>Moderate</td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Ingress Controller Functionality</strong></p>
+<ul>
+<li><strong>Flannel:</strong> Does <strong>not</strong> include an ingress controller. You must deploy a separate solution like NGINX Ingress Controller or HAProxy.</li>
+<li><strong>Calico:</strong> Offers a <a href="https://www.tigera.io/blog/a-detailed-look-at-the-calico-ingress-gateway/">Calico Ingress Gateway</a> (part of their enterprise/cloud features) that leverages Envoy. It provides fine-grained RBAC and integrated security policies for incoming traffic.</li>
+<li><strong>Cilium:</strong> Features a built-in, fully-conformant <a href="https://docs.cilium.io/en/latest/network/servicemesh/ingress.html">Cilium Ingress Controller</a> powered by eBPF and Envoy. It supports shared or dedicated load balancers and integrates directly with Cilium's L7 security policies and Hubble observability. </li>
+</ul>
+<p><strong>Summary Recommendation</strong></p>
+<ul>
+<li><strong>Flannel:</strong> Best for small, simple clusters where security policies aren't required.</li>
+<li><strong>Calico:</strong> Best for large-scale, multi-OS environments needing rock-solid L3/L4 security.</li>
+<li><strong>Cilium:</strong> Best for modern, high-performance clusters requiring deep visibility (L7) and a unified networking/ingress stack. </li>
+</ul>
+<p>These technical guides compare Flannel, Calico, and Cilium Kubernetes networking solutions, detailing their features, security, performance, complexity, and ingress controller capabilities:</p>
+<p><a href="https://www.tigera.io/learn/guides/cilium-vs-calico/"></a></p>
+<p>Calico vs. Cilium: 9 Key Differences and How to Choose - Tigera</p>
+<p>Calico and Cilium: Ideal Use Cases. Calico and Cilium are both suited for environments needing scalable and secure networking for ...</p>
+<p><img alt="" src="data:image/png;base64,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" /></p>
+<p>Tigera</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAABACAMAAAAec7jXAAAAk1BMVEUqLjP///8cnfwAChUbov8bISeSk5UkKS8hJisboP8nKzD29vYqLC7z8/N4enzv7+9tcHIOFR0UGiEqKSl/gYMqKCQdl/EoPlPBwsMAAAA2Oj5bXWCoqapDRkoqJBsnUXfMzc4ejuIlWIErIRIhfMKfoKLj4+QjcKwpNUAnSmdRVFgfiNa1treJi41iZWja2tsfGA5vFQYPAAACyklEQVRYhe2V7XajIBCGUSQSkCgkaRRjaptou9nE7P1f3c6gpk1Od+t+nN0/vKetdpB5YGYYCPHy8vLy8vLy8vL6pxJx/KFR/HBGslwukz8gMmqrypgeEA8krklVEc3HjzgM8HENy93m8fFxs1sOM2I+vvxsnW8S+txKKdWpMuA5k0ouwIPuajDKOtO9D9oqpdJhBbvnpzCKovDpeU9MLZWSuQZHFt6UPLNPkbFtg0EzA0x4AlNvR2PNEMo798/K+VsfonmImkeHNT/igLSCmKb38jmTpcFVCz4w35AAhe0TnffvGnd5iAAXPsBvCFB9whHYnUknMo3z3mQZOD2RYZ+mRGO+yGDl7RHKSxDVL6ASJPkCyOhl87p5Aej8y9Jt9MLc1ClMEUv47Kg5o81Zx6JnUtzVlnKmyxPH2LIVGnqHu8MckPskSfYAnR/WzCWnovlEpmNsIWKVJRY07BOilDIhwADWighzCQLFwdoysn4Iwwd3TBIS4quuAxg5CVh9O4XJzvBVxuO+RAJJHNPCdKhEOqR6xSoMdYGJK/krJPLr2s3ePwET0zODqRAK1fwGMxU3zKGiF7pxfzHLJ/MRs4IJ8LOdxBxiG5dpiptqtWNqjKIR+pKmmO6uwLFjiZ4D+lFsSZ/LavsrNcSKAsvkRG9qiBZCYWbLt5MTrL7d1xBvA+vidCkmMcez0nXueWR9DTkXeVae8Yg0LpHX41rcnxVYkXW1e6bTmOJ9T5iZsSe8o1wMx1gobIUugPu7ngBBsdiDpDXTmDe9T197n7lCa+MOZ22EEK4bNey292HgLa+w6qYySWxmLWxA5djj406mMht6PCz9sqDC5CqVKziu0DFkqmp+1+Nh1MJyZMdZA+8TejyIaVseuXZXaEwpdbcHp+RYWneXmdEGRkqx5b6/y3BU4IPjrUjpJCT5H3e2l5eXl5eXl5eX11/Qd6/7Odpme/H1AAAAAElFTkSuQmCC" /></p>
+<p><a href="https://isovalent.com/blog/post/navigating-the-ingress-nginx-archival-why-now-is-the-time-to-move-to-cilium/"></a></p>
+<p>Navigating the Ingress-nginx Archival: Why Now Is the Time to Move ...</p>
+<p>Nov 13, 2025 — Option 1 - Quickest: Moving to Cilium Ingress. Cilium Ingress is a drop-in ingress controller that supports standard Kubernetes In...</p>
+<p><img alt="" src="data:image/png;base64,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" /></p>
+<p>Isovalent</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAA/1BMVEX///8Aa/9QvP8FUsEANHIAXv8Abf8AZ/9SwP8AMWs0l/8AK2s1g78AT8BRvv8AZP8FTrcAMG8kdNFCuP8AMGcAYf/5/P8AWv/S6//w+P8AJWsALmJym/8ASb8AKmMpe9bv8/+iuv9vxf/b7/9kwP7E5f+23/+m2f+X0v59rv8akf8ajP95tu8lerh/nsdPhf7g5/7v7vFnc5UAAFwAOanN2fy/0PzW2eI5UYIAHGcATtKyuMmWsv9ajP+JlLA1efwAEGMGRZ2yx/wsR3wAYeVaZowIQI1fe70AQL2DmdWJqf+rueAxYMPP1+xdfcuRrt8ALJ4naqZhjfUnY5UANJlnRPw6AAADUElEQVRYhe2WbXvSMBSG6Vva2lHK2tJBmQLbAF9wLzrmHBNBRJxO3fT//xZPSpI2Scs6d11efvD5mj530yfnnLRS+de1s/cwe8/3e3+OONj3VZDf23mIPUHs3x/Rd5k9QbgH97OrnP2eiEbfl+wJQu2Xsg/kt6eIwV325iD/7QzhDxqb7MPN9jViWIQAuyvKUi1Jrjps5vmfPnsk6/mL0WhL1uhlzvsNU1J0eFQ5PnnVciS9lvdwaiiCQjROVs7enNd1XsHbUwkwqfF2M5ywtQunxQNicyIBLk3ObrS5Tb47dziCcigBuA2E0yNh+fjkffod9gwZov8oE0HNnMshV84+nDOAhgzxDfNauvurgkq5aJEogoVS6wqLbZPaLzv5dlCDRGEjxWwLa4gApvL5cN/xEROWSFEQv9AJyQd8Ot4IqAwAYHsAMPiNjtcApHurzxvsfd+tJxHAQY25laskQzSLPW1390uBfQ+mpAWAGOGwrri1KY4AaYHtaZq2+nqdY2/2cKtjwDIBTLnVCG9gEesJQKuuvnVE/2A9KQAAZYSfjrKHve4kfEAJACP4KA7onMMAbV2t2fPqQgRoaacAjYtiL70iAJBkCPWa7SfoJOQFehaQRtEYZuYczgCtS+4yA4D3QwACgETBj1mrTiIAQuqHTkK2LgHgO1bf9/kxCwCNADL9NA+VpZ4H0KrblioASASQYtqzbXNmlwS49Zi1bdpP02qslwYsESWwfmoagV4a8NhjgIhW25iNmjIAGkGmn65/BHZ5ANuAErFanIezIPcYZYBaZwAjM9XaJvJsu9QOaBkpNW6oTU2UIO4GVOkh8u3cwd2keHYsAp6IhUQzrHU4QOUUTwRAbAa4lmuKAVJ1k6mIlEUxAP4WtpZygCxIerUs8gFgH9VJGdXEW4EEqUiIFAB2xyHDRAiQBUnvhgyCAiz1xnHWd1JOgFyQDFFlAJfayUCWA+SDpL2GEQBwLf+m5dBKR/kBUt1yfwkIVQEAdvZnYFeLApSDJIjtn63MDxLcSQUB5gVJGDPbTgmoMECqcSQRYODTgTdDxQFSTaQ9KIi0KtxJ4YYAqW5NiZD0WYDv9du7/enPioDQ9KC+OUCqTmTkKTRWvzqlAP/11/UbE0dXPEVCM5gAAAAASUVORK5CYII=" /></p>
+<p><a href="https://zesty.co/finops-glossary/calico-vs-cilium-in-kubernetes-networking/"></a></p>
+<p>Calico vs. Cilium: Which Kubernetes CNI Is Right for You?</p>
+<p>Both Calico and Cilium are excellent choices, but they shine in different contexts. Calico is stable, flexible, and great for orga...</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAPFBMVEVHcEwZDzYZDzYZDzYZDzYZDzYZDzYZDzYZDzYZDzYZDzYZDzYZDzYZDzZx+J8WAjNj1Y8rQ0s8b19QpHcWyxWiAAAADXRSTlMAsHqR8+JBHcJjop2KMcCO9gAABPZJREFUeJzVW+22mzAMA8pnW6DA+7/rkkCAhCREor2caX92drfZ2EJ2jJMk/zGqFX9vuWya7PFM07qu0zR9PrKmKf/ID2H7ndZFnrcG8ryo07fw4sfWm6ew3XohvHg2P/OhatLCb3tDkf7Ch6p8RVlffHh9ORdVUwcC70xG/cUwVBlqfnYh+44L+NN/NwplSppXLqTl1cd/XTCvXHheCkIGMN+HouEf/wFbG1x/+CKD0NS4facDbc0EocLD3w/T0Dt/UhBv5ANnXz9Nvh/lD/T5U9i8CMBndAdAIoViUOLpF/h8PBlQqAFJoOz3Y/cJ/oV4Dzj7w6ebAgEQiJVFLv7t2HUBCijExaCi7MsAdCEKzB7EMJHgv8TUdZ8z+yIL58+Py6+CSMAZBRQeZzHIqOqnEnCeAYE8C9tvuPLXywAEVWBFuDhyBBSQAQirwIoQEVkC9IKBggKRfztQFhrSvkzAuQqs8CahIgmgGBhJAYnCl4QnZX9+BeMzIPB02y+5/nMJAOJA7pRkpgVQUAzsQr3AAc7moCEDMM4BiKeAQO7gISkBOgFIBlqnGHAarF/BuEKw4ajIlzQQpUDrCAHLgGkJAESB9siCqwwAKdAeQkBqQKsDEK/DGpYWvDj7moFwBgReRgaoKrAlILYU72FUBLIMrgkAX8IZexpSKrwLAE6B1mhQyTq8BSCqHbSxywGVgVUDu6iG3IEtB1wjsCWAosCuLaBUqN8lgKLATotKggJ7BjIqIFFoLaLqwD4AhApIrPXgjf9b3YaQhWDBe6EArgJGAlgKrJ0Zw8Fxb5+kwMpCnINWANgMaBYSHNwz8IoDDedAPxj2aQro1yBD7fdGAngKtO3cmqJH4n40A0BnYDkoV2AlsBjIFgIFNUeHZcBkoGzILcT/VynhgKmByoHBAuoApEP9YAVAeGAjnpQ14cBo2z8A4ATuwIGBRyDdERGBQwIOgOcECAltDXQlAHkc/C04DQAmi7MD8UIUw0DAvGhLK0iKYxiI1YUHWIyGYRxGE1ZdAgtjhpVjW3Kl6JoOgHUpp/oBaVf+Ur83SUGOSZhjgXbGao3Auri0ZPR8SoTBcODTgg4sTSk9Ir3cneuBKXEwWRwwKDChAdAHE3ZE11rnM3xOpY9mLAvNDOCt4Xo4pVl48YS8jQpJFhoUIA4H23cLcki2pwDTm28jGnZMOF1JgDEovDymY84G++/IV8dk1OlsP6jkcrBlgDmemh/vqGH1mgFcA1trWM2M67cGlUqANa4ntGijAHU8tr/Z4PWA/lqjcPhwR4RAU2DEzbu+26Gf7VYKwG2IhGORAg2BpgA3oHFtMaAsmHgNdH66BTuzfqEAlQDPZhumBQOvgZ7P99h3i4UCvg3GMDwLDFhFmLg+UMK7wgEUxaUUcyNC/yZR/BrPPCvjXsHQdme8GEw0A8MbddGrXBPLwLM95zhFninABOBsmS2SBn3s9t4B7/OVxihBnEgNPF9ojCKiasiZBEStdEYstUoKMK9g7GLvqQdyhZgIwBcXiydGA7+5Wo2M5Bn7J81BeIvdA2y5PQmu94tCgL6C8Hp/8IJDP6EBYC44hK54oI04dcUjCcgyyMDTbWq/B+Ses4EL13yS+y86Jbdf9Uruv+yW3H7dT7lw74VH5cK9Vz5nH2699Kp9uPPa7+LDrReftRP7q9/1H1/9Nvy46/L7N/EPTKdrWrX9yNsAAAAASUVORK5CYII=" /></p>
+<p>zesty.co</p>
+<p><img alt="" src="data:image/png;base64,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" /></p>
+<p><a href="https://www.civo.com/blog/calico-vs-flannel-vs-cilium"></a></p>
+<p>Cilium vs Calico vs Flannel - Civo.com</p>
+<p>Jul 17, 2023 — Performance characteristics and scalability. ... Calico's direct IP-to-IP routing provides high performance and low latency, makin...</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAM1BMVEVHcEwA/28AAAAAw1UA/28A/28A/3AA/28A/28A/3AA52QAokYAgjgAZSwATSEAHQwANxhPcH4bAAAACnRSTlMA////akwRqc8NtiEgqAAAApJJREFUeJztmwmWgzAIQE2sWpeq9z/tpJ12xqdCFiD4ZsIF+EYIhKWqXtI33d1klHvXtNVGblm1vxluP+r7Lr/6p3T9t/5WSf8PgZp+R/D6/3r6jXF20CrY36/c+6rR1G9Mo2kBT+kq1T/g/kGlq9+YAlAACkABKAAgwDiNqgCjtXatB10Aax+1MoBDkD4ECKBe3gR2kkWAAIb1A2AXUWsEvWC2GxnlTgEEeGwB7CxmjfA9YG0WBBCgtnuR8UkQYDgA2EXCIeBYcAQQuRZggPWUYOX2SRjgcQrAjgAD7N1AyCFggKMbiCCkATBGCARgQQm4fBIGGM7dYCMsEQIBmH0AziHoCEhSCvnhVujWiABMAQD0CEEGoF7PDAA0n0QA4KvwIASfRADwm2gnydbIBeBOIe0ZgwCcpCQCp4A9TmMBHEL8IfACJDgEN0D0M4YdwEYGKQwAj8eIzBGngAF44zEsa7BDYAD+eIzIFIggBmCXsCCFAYQkBPgpBCCIAoS8IWQBnPhMQRzAlzJhAOEZCQEhBwDqk3kAkJTpnwAgVnBpI+RxQ0+iJn8Rea7jv30VU4ORejgmZEThr2aRnJArJVNPShPVL2xpeZr6KUK7AEBoMiwEwPs4jX6eJ9WrOAsUCer5AJKL+ExFqvSSKUuZjlIpZACglc3JANRq8YWL1UHleqp6UsOCYPpBAJ6WDVfXKLVpxdZITmzb8XVwL9y4BFu3vF38CzevT/XzTxDEDDCITPRcd4RjH4qyD7HsxnjEhpkuO8i0CUVr5FODB0B9mO1zETPe+ikAygONiU8NHgD1odZsUgAKQAEoAAVAf9lNfd1PfeGx1135bPWXXvXXftUWr/VXrz/69Zffn4eQf/3//flfaFhYGfrk45UAAAAASUVORK5CYII=" /></p>
+<p>Civo</p>
+<p><img alt="" src="data:image/jpeg;base64,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" /></p>
+<p><a href="https://www.suse.com/c/rancher_blog/comparing-kubernetes-cni-providers-flannel-calico-canal-and-weave/"></a></p>
+<p>Comparing Kubernetes CNI Providers: Flannel, Calico, Canal ...</p>
+<p>Sep 24, 2021 — Pods within the same host can communicate using the Docker bridge, while pods on different hosts will have their traffic encapsula...</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAArCAYAAAADgWq5AAAEGklEQVRYhe3WX2iVZRwH8I9jOmdaOUnJtD9m5pL0LdOCqIuSF4VAA4vyIjKoxLoIg3gpgiCKlyi76CaLLBAzTYgwsE6RlFRiOt+0WphTmLBa0pA28c920cXznHlch2m2eRHnCy/nPHve8+z7+z6/P19qqKGGGmqo4f+MEef7w6SUNaEJIzEmfkJvfI7iJI4WaX5ykHMaMBWnijRvH1LC8fBJmIVmzIikLx5A+AR+x29owwEcKtK8s8qZk5ChD2tweLAAz4lwUsqacT0W4oZIeFwFycHQjS60Yze+Q0uZWFLKpmNzPPdnbMNG7C/SvOtfEY7XnmCFoOa0SPR80Y2D+AE7IrEmbMAt8Z0ufB8DW1+k+YGzEo5XfztWY85/IHg2tOEbzMfMKvvH8QneLdJ8K1UIR1VX4QFcO2xUT6M3flamVxs+wgeRQzM+w566yl/GAnhYIHvlcDONGOlMsr3YgnVFmu/GF9iJmzC1voJsMx7DE86tmIYLR7ClSPO9cb0Ao4Qa+rOe/px9BPf7J9nu+MB4NA4z4dFoqFhPwCW4Bp11FQV2HybHl3rxC57GEiHKRViGl9AxjISbsDwpZbfF9TpB9btw9YiklM3GSjwkqNeN97EJO4s074lBlXERbsViIcimISTbIQg1QRg8u4QpOF8ovg31groLI9levIY3ijTvSkpZU1LKlgg9skGYXN8Wab41KWXb43o5rhoiwuOFlNyGY5HPQRyO+3vrMdFpldqFntdV0d7uwaVxvw9LklK2Wqje9XHvqSEi3CiIcxl68Fck3Ymvsa8OY4VEh5YKAzJDUG8qPsWH+FG4mlexIE6ht4TpdL7oFdKw3I8bhSEyR5iyY9CKjUWat9YLjqpPuIrj9HeN6cIYfrlI8zz+faxQhGuxIillLUWatyal7Bm84sx8rlaYoyOhxop3Ngl9t0Eo+lE4FYNowyEcKxuiekH6vnjAlIrDe2LU/QUXC/DzeNiN8R+0F2n+TlLKlgmVXMYm4SorMQmzcUcU6Ai+KtL8yyrBVUWdkNQH43peUsoWxWhahDS4c0CXKF/dOKFIytjsTFV3C+nyepHmebyl5/GkYHaOC+m2LCllc+PtnRPhNuyPRMbh8TiiO/Ee1gzwp1NUd2x7sK9ivRT3Ylo54CLNe4o0bxV8QoeQQnfjUUH1s6JeKKQ3cbNQUIvxq9Dadgg2EETvulK4zg78MYDwC4J5vyI+KzAPbwuKl7FVsKoPxvVcXJeUsu1FmvcMRrjfrSWlbFWMdKagdpvQHTqFPL5cmHhlU7QWz1Yz2cOJ+orvm4Wrfk5QcKag+Im4P9ppn7ELH19osgzwwxVta6nQAycLJMuF1oECL0brd8FRzcA3CN5zlqDyRKGiu4U5/1PM7RpqqKGGGmqoYcjxN8DyTe92vOgLAAAAAElFTkSuQmCC" /></p>
+<p>SUSE</p>
+<p><a href="https://blog.devops.dev/stop-using-the-wrong-cni-flannel-vs-calico-vs-cilium-in-2025-c11b42ce05a3#:~:text=If%20you%20just%20need%20connectivity%20in%20a,for%20Kubernetes:%20Cilium%20is%20the%20clear%20winner."></a></p>
+<p>Stop Using the Wrong CNI in 2026: Flannel vs Calico vs Cilium</p>
+<p>Aug 3, 2025 — If you just need connectivity in a small cluster: Stick with Flannel. If you want something secure and production‑like, without go...</p>
+<p><img alt="" src="data:image/jpeg;base64,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" /></p>
+<p>DevOps.dev</p>
+<p><img alt="" src="data:image/png;base64,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" /></p>
+<p>Would you like a more detailed breakdown of how to <strong>configure Cilium's ingress</strong> for your specific cluster setup?</p>
+<ul>
+<li>
+<p><a href="https://blog.devops.dev/stop-using-the-wrong-cni-flannel-vs-calico-vs-cilium-in-2025-c11b42ce05a3#:~:text=If%20you%20just%20need%20connectivity%20in%20a,for%20Kubernetes:%20Cilium%20is%20the%20clear%20winner."></a></p>
+<p>Stop Using the Wrong CNI in 2026: Flannel vs Calico vs Cilium</p>
+<p>Aug 3, 2025 — If you just need connectivity in a small cluster: Stick with Flannel. If you want something secure and production‑like, without go...</p>
+<p><img alt="" src="data:image/jpeg;base64,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" /></p>
+<p>DevOps.dev</p>
+<p><img alt="" src="data:image/png;base64,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" /></p>
+</li>
+<li>
+<p><a href="https://www.civo.com/blog/calico-vs-flannel-vs-cilium"></a></p>
+<p>Cilium vs Calico vs Flannel - Civo.com</p>
+<p>Jul 17, 2023 — Performance characteristics and scalability. ... Calico's direct IP-to-IP routing provides high performance and low latency, makin...</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAM1BMVEVHcEwA/28AAAAAw1UA/28A/28A/3AA/28A/28A/3AA52QAokYAgjgAZSwATSEAHQwANxhPcH4bAAAACnRSTlMA////akwRqc8NtiEgqAAAApJJREFUeJztmwmWgzAIQE2sWpeq9z/tpJ12xqdCFiD4ZsIF+EYIhKWqXtI33d1klHvXtNVGblm1vxluP+r7Lr/6p3T9t/5WSf8PgZp+R/D6/3r6jXF20CrY36/c+6rR1G9Mo2kBT+kq1T/g/kGlq9+YAlAACkABKAAgwDiNqgCjtXatB10Aax+1MoBDkD4ECKBe3gR2kkWAAIb1A2AXUWsEvWC2GxnlTgEEeGwB7CxmjfA9YG0WBBCgtnuR8UkQYDgA2EXCIeBYcAQQuRZggPWUYOX2SRjgcQrAjgAD7N1AyCFggKMbiCCkATBGCARgQQm4fBIGGM7dYCMsEQIBmH0AziHoCEhSCvnhVujWiABMAQD0CEEGoF7PDAA0n0QA4KvwIASfRADwm2gnydbIBeBOIe0ZgwCcpCQCp4A9TmMBHEL8IfACJDgEN0D0M4YdwEYGKQwAj8eIzBGngAF44zEsa7BDYAD+eIzIFIggBmCXsCCFAYQkBPgpBCCIAoS8IWQBnPhMQRzAlzJhAOEZCQEhBwDqk3kAkJTpnwAgVnBpI+RxQ0+iJn8Rea7jv30VU4ORejgmZEThr2aRnJArJVNPShPVL2xpeZr6KUK7AEBoMiwEwPs4jX6eJ9WrOAsUCer5AJKL+ExFqvSSKUuZjlIpZACglc3JANRq8YWL1UHleqp6UsOCYPpBAJ6WDVfXKLVpxdZITmzb8XVwL9y4BFu3vF38CzevT/XzTxDEDDCITPRcd4RjH4qyD7HsxnjEhpkuO8i0CUVr5FODB0B9mO1zETPe+ikAygONiU8NHgD1odZsUgAKQAEoAAVAf9lNfd1PfeGx1135bPWXXvXXftUWr/VXrz/69Zffn4eQf/3//flfaFhYGfrk45UAAAAASUVORK5CYII=" /></p>
+<p>Civo</p>
+<p><img alt="" src="data:image/jpeg;base64,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" /></p>
+</li>
+<li>
+<p><a href="https://platform9.com/blog/the-ultimate-guide-to-using-calico-flannel-weave-and-cilium/"></a></p>
+<p>The Ultimate Guide To Using Calico, Flannel, Weave and Cilium</p>
+<p>Jun 7, 2021 — Selecting the Right Solution For Your Project. Depending on your needs, selecting the right CNI plugin to use in your cluster coul...</p>
+<p><img alt="" src="data:image/png;base64,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" /></p>
+<p>Platform9</p>
+<p><img alt="" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAFIAUQMBEQACEQEDEQH/xAAbAAABBQEBAAAAAAAAAAAAAAAEAQIDBQYHAP/EAEEQAAIBAgMFAwkGAwcFAAAAAAECAwQRABIhBRMxQVEiYYEGFDJxkaGxwdEjQlJTkvAWM6IVVJOy0uHxByQ0VYL/xAAaAQACAwEBAAAAAAAAAAAAAAABAwACBAUG/8QAMxEAAQMCBAEJCQEBAQAAAAAAAQACEQMhBBIxQVETMmFxgZGhwfAFFBUiQlKx0eHxIxb/2gAMAwEAAhEDEQA/AOxebo0CvJIwdr9oE311tYYvmvZLy2umzwZYN5TOd6NcxJNzYjn68QG8FRzbSE9nU5VkidAI2zAC9uHMfHA6lJ4pDKdzdiBFbiBy7jfj+xiRdSbLzMd3MkMRL3GRSLAaCxvgxcSpNjCRadGp1eZ23jD0wSDrrawxCb2UDRElemgCUxkp3O8UE5zry6HEBvBULbSE7MDu0khdSAbqNbHqD88CNYUniE3enze91ENvSC8vXfj4WxIupNuhOzELIkUTE6ZVOnLr88HhJUnWFX7+t/vJ/wAIfXDMrUqXcVZQoWRfTAK2zMVvboLfH9hJTgElQGjRi2e3Nly6+u/ywW6oOsEI0jyVCIj5pG/moXsLWJFugNvf68XiGyqEkugdqm87ZiYQGL5VOTg2rG9/AccDKIlWzkmFDHI0byK7/bJwUNcBATxHHr7sEiQLWVQSCZ1RkCMyLbPlyizMVvboLfHFCmNFklQpSNy2e2U3ZSuo77/LEbqo7RCO7yToqPeR/wCYmewy8rDjb6+vFwIElLJJIhTedsbw5W3llO7+96Rv7ueBlAEq2c6bqGORopZFd7SxjsqGuAveOPX2YJAIsqgkG6ivT/mSfrTEg+pQ+X1CdEWDMFaq9PgAcl+fhgnsQHavZn3sYDVea5y75dL/AA4XxLQdEbyNUTBm3km6ta53lgM17npz48cUdG6uNbLyij8+kKkbzdi9ib8T44PzZehT5M/SmTMwqF3rIJfucL8D1Pw7sQCW2Qc4B19VAjMXbI1Se1rkF0vfXut158eeLEKgM6SlJfeJrVlr6bxezm5d3W2JtsjvuiIiwmO7IB7W84Zr3+PG18VMQrDWyqPKfalLsuCWaBgaySLdxWOoJPHrpxxrwdB9ZwaeaLlYsfiWYdhcOcbBc1m2jtBiCa+rJXgTO1x78eg5Cl9o7gvNtxNYnnnvRX8V+UH/ALOX9K/TCfh+G+3xK1fEcT93gF0/Zm39lVkiQUe0Iah8ukSsuaw5gD4Y87Uw9VgzPbC9NTr03HK10o6o+0RlbPYj0VA06X/2woWKY64QNTKtE4nkdYclt9JILKAdF14HU+7DWtLxlF+CS9wp/MTHEocbQ2cGeeLaNPJNkFikqs7WJJ7I46csMNGtGUtMeCT7zQuQ8E9BusFtCtk2jXTVU3pSNcD8I5D2Y9FQpClTDBsvFYuu7EVnVHbq78jtreY1hppj/wBvPrf8DAcfYMYfaWHzsFQahdP2HjOSqmi7mnwIWvn2lRSxlfPIrMNESRCfeePcNcccUKo+k9xXpjiqDrZx3hc625XNtGvkmJ7A7MY6KOGPR4WiKVMN3Xi8dijia5ftoOpBQqJGaBhrLYITya+nzHjhlT5RnG34QwxDzyZ3069v0g5KaU8In/Tg8szimtw9Xh+Ev9l1n5De7CffKa1+41FRbNrZqGrhq6Z8s0LBlONNRjajS12hTmucxwc3ULsMvltsUUYjM+6qSo3kLRuTG1rkEgEGx0PHHnG4Cs4yBI420XbfjqLRBN+1Z3y228u0VpIaKd5qUqZGky5Q7XItawOlufXHQ9n4bky5zxDtFyfamJ5VrWsMt1WcgkKsrKbMDcHpjpkAiCuCCWuBGqsp4ldxLGyRrIofIzAFb/Lp3WxmZVIGWCYtIWivhmudnDg2bwdp9W6E9RuaYvoXkOS4IOUWF+HM3+OIDylS4gC/b/FRzRQoEtMl1pGw4dZ/HWoR1xpXOU06b0LMCoL3zAkDtDifH64zsfklkaLdUpGrFWQJ4mL8e38yot2Yo2mIU27K2YGxPM+AP7GIXco4M219eauxvI0zUkE6CLxO/dogJExpWdpS7+b8+T9Z+uF8mz7Vq94qfcVUbKhpN8XgqTPPGjSRQmErncC4HE+u3O1sLquqFsObAOpnb1Zd5jKYMtMkaCEOkhZizMWJNySdScaQIsFzXiblW+z2Walninfdxx2kRyLhXJAtp1H+UdMZ6pLXgtEk7dH880abQ+m5rzAF56f75Iqigp5JkVqlWBOqqrAt3AkcTwxWpUqhpIbHTOnSl06FAvAL56IiejtStK0krO4sxPAC1u7ww9jQ1oaNFgrOc95c7UoyhZGzxSmyMpOb8JGoPy8cKrS2HDX8z6nsVsOA/NTdYRM8I38u1OEaHRZ4794YD4YhqPA5h8P2qDD0SQOVHcf0vTkmQgjLl7IXpbli1JoDLXSsQ8uqGREWjhGyWmI3hif+XKMjd3Q+B+eBWs3NuPXimYQ5n8mdHWP77NUJJEAD9pGbdCdfdgioftPh+1YUmj6x4/pT/wBmn8+L2j64z+9O+38ro+4U/vWCopJlqImpiwmDqY8vHNfS3ffG5+XKc2m63wcwy6q5qTs/zuW0kqnN2lhjUoG+8FOb0b3t3Wxnp8tkGnbr22Qqto5jM9kKeZo0o6VaZy0bXaQtod4DaxF+Qtb1nvwaYdncX6+SzV45NoZp5pInth6wEK2n3ZkvOzpUMAZECAjN67jUixOnE4y0nPy/IAW7X27im4hlPN/0JDt4E37x/qnsgo88LFgXyyEixXS4HHgdfZgtzGr8/C3nw6EmoGtof87yb7dQ1NtT/iYpw9c4q6pNj1W1IopYWiEjaESPYkDg3DwxzX41tBzmxIHqF3Kfsqpi6bahdBI/w9o/airtlVWzIi82QlrKcp1S9+Ps9+L0cS3EPA0jxSsTgH4GiXTM26h/fWqqHGN65IKZ4YnYmLK7JkpJKrd0sc8NTIrLTu86uA54D0Rx4A30JBwqq1+WXEEDW23eV69uXN8tjsho2tpa3djSsLwtl5C7Dm2/55TuzJRKqs7gXIkv2cvfbNfuPqxzcfiRQLS3neXStGEw3LBwdzfNaqPyDooZm3O0jNLGudY3UWZuQNjfjbGB3tKq5sObAPBaB7NotdLTcaSsVIZRUSCpvvg5Egbjmvrfxx3WZS0ZdF5qsHZzm13VtsCmlr6zzRM27kX7QqL5R1PqNsZcZVFJgdvsn4DDur1DT+ki/l4+a0X8JJmVBVTXbTtQZRf139eOefaVWNAun8Dw8i59di1dHGYWEVOioiKVYKouLEW5nUa2vjlug6ruNEWCZV02z6uWaKUqTJDlJzXPH43xdlSpThzdil1qNKsCx24WVfyOqlfK1TFc2y2Xjfxx0/ituauD/wCfj6/D+p/8Fzfn/wBJ/wBOF/E6i0fBKK4ns+CasqoaWmUvNM4RFHMnHeqPbTaXO0CfkLjAXbn/AOnex5lE9d5y9YygztE+UO9tWI5XNzYY8232jXbZptstrsLTN3C6uNkbJptgxR02zo2jCsTMWu3pXtrz4+72Iq1XViXPMq7GClAbZWXmrrI1QCd4UUbwjU9o3uOliNMLzSMqvkM5t1ntoeStHtavmq5WnjqJTmyx2CMPxXIPIfu+NlPHVaLA1sQFhq4CjWeXuBlW3k7sWk2GkhpTLIZrFmlAzW5WtyxmxFd9d0v2WnC4anhmkUxqrKpbeROGzBct8qgXA6nphI1Wh1whGDRTq6raUaS3U2A5a8x39x64uLiCl6Gd1J5q4c1FzvSqje27XpG+nS3LAziMqOS+bdRqpmmd3U74+hYEAr6+XPX1dBgkwBCGpM6qPLH+KX9A+uDdSyr9leS/k1smZK2k2csFXHmCnO2YcRfj0wx9evUGVziQiAxt4urueoU0xSlXPIfu3ub2J149O/xwlrb3Rc63y6qRl0UyTsQY2zEWseHd34qOpHrKaUbc5XH2VtdRoPr3cMTdSLdCVlcRzvDKc2mW9rHQWHDv9+DaRIUMwYTVqYxSpvwUZR6N7Np/xiZTNlA4Zbr006GlZacF3YEZQbt44gF7qFwy2T7H7NpZjqpuRa3wwOoKdZTd2wgtY7m3Xl9e7h8MSbqQYSkNlleKY3sMpNrcPViWtIUveCq3JUf3So9o+mHS3ilQ7gnVsjpVdh2X0uBt944NMAi6FRxBsn7Mkd6gl3ZjccTf7pxV4AHrirUySUXNpSqRx3LNfv0N/bhY1TDzVNN2aFiuhCXFuRxUaqx5qjj0pmPO6n+lcEqo0QO0JHSoGR2XRuBtzfDqYBF/WiTVJBsl2c7yTguzMb8Sb8hgPADVZhJci5//AA0bnlJv32OuFjVMOiIIHmX/AMX8cV3VvpUEGtESdTZTfvsNcWKqNEZhaYv/2Q==" /></p>
+</li>
+</ul>
+<p>Show all</p>
+<p>Keep this information and add metal LB to the list</p>
+<p>Adding</p>
+<p><strong>MetalLB</strong> to the comparison shifts the focus toward <strong>bare-metal</strong> environments where cloud-based load balancers (like AWS ELB or GCP Cloud LB) are unavailable. </p>
+<p><strong>Updated Comparison Table</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><strong>Flannel</strong></th>
+<th><strong>Calico</strong></th>
+<th><strong>Cilium</strong></th>
+<th><strong>MetalLB</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primary Goal</strong></td>
+<td>Simple L3 networking</td>
+<td>Secure L3/L4 networking</td>
+<td>eBPF-powered L3–L7 security</td>
+<td>External IP for Bare-Metal</td>
+</tr>
+<tr>
+<td><strong>Role</strong></td>
+<td><strong>CNI</strong></td>
+<td><strong>CNI</strong></td>
+<td><strong>CNI</strong></td>
+<td><strong>External Load Balancer</strong></td>
+</tr>
+<tr>
+<td><strong>Technology</strong></td>
+<td>VXLAN, UDP</td>
+<td>BGP, IPIP, VXLAN</td>
+<td>eBPF</td>
+<td>L2 (ARP) or L3 (BGP)</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>None</td>
+<td>Rich L3/L4 Network Policies</td>
+<td>L3–L7 Policies + Identity</td>
+<td>Traffic announcement only</td>
+</tr>
+<tr>
+<td><strong>Complexity</strong></td>
+<td>Very Low</td>
+<td>Moderate</td>
+<td>High</td>
+<td>Low (L2) to Moderate (BGP)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Ingress Controller &amp; MetalLB Interaction</strong></p>
+<p>Unlike the CNIs mentioned, MetalLB is <strong>not a CNI</strong> and does not provide an Ingress Controller on its own. Instead, it serves as the <strong>bridge</strong> that allows your Ingress Controller to be reachable from outside the cluster. </p>
+<ul>
+<li><strong>Relationship:</strong> In a cloud environment, creating an Ingress often triggers a cloud load balancer to get an IP. In bare-metal, MetalLB performs this role by assigning a "floating" IP from a pre-configured pool to your Ingress Controller's service.</li>
+<li><strong>Integration with Flannel/Calico:</strong> These CNIs handle pod-to-pod traffic, while MetalLB handles the "north-south" entry point. You still need a separate Ingress Controller (like <a href="https://github.com/kubernetes/ingress-nginx">NGINX</a> or Traefik).</li>
+<li><strong>Integration with Cilium:</strong> Cilium has a built-in Ingress Controller. In a bare-metal setup, you can use MetalLB to provide the stable external IP for that Cilium Ingress.</li>
+<li><strong>Unique Note:</strong> Calico and MetalLB both use <strong>BGP</strong>. If you use them together, it is often recommended to let Calico handle BGP and run MetalLB in Layer 2 mode to avoid protocol conflicts. </li>
+</ul>
+<p><strong>Summary Recommendation</strong></p>
+<ul>
+<li><strong>MetalLB:</strong> Essential if you are running <strong>on-premise/bare-metal</strong> and want your services to have a stable external IP (Service type: <code>LoadBalancer</code>).</li>
+<li><strong>The "Pro" Stack:</strong> Pair <strong>Cilium</strong> (for high-performance CNI and Ingress) with <strong>MetalLB</strong> (to provide the external IP) for a modern, production-grade bare-metal cluster. </li>
+</ul>
+<p>These articles explain the role of MetalLB as an external load balancer for bare-metal Kubernetes clusters and its integration with CNIs like Calico and Cilium.</p>
+<p><a href="https://www.reddit.com/r/kubernetes/comments/1l2q0wl/ingress_vs_load_balancers_metallb/"></a></p>
+<p>Ingress vs Load Balancers (MetalLB) : r/kubernetes - Reddit</p>
+<p>Jun 3, 2025 — * geth2358. • 8mo ago. MetalLB is the mean, Ingress is one user of this mean. MetalLB controls the input traffic at layer 2. This ...</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAn1BMVEVHcEz/RgD/RQD/RQD/RQD/RQD/RQD/RgD/RQD/RQD/RQD/RQD/RQD/RQD+////RQD7/f31+fro7/Lv9fb/QQDM2eDJ1d0ECQvh6u3T3ePb4+gOHCD9PAH/YAH6c0r1iGrrOgr5vKbYyMf2o4n/UgP88Oz8YC0xPD/OMRb43tb+Uhn3zcKtNB/VqKJ3foBWVlecUlCgpqmKGRfTVkCveHmYoeobAAAADnRSTlMALz2firrLFPLeSF9YaABrrNsAAAqdSURBVHictVsJY6I6EF5bzx5yBR9YGi5FEbFa+/9/25skHAkE5dCx213ZkO/LzOSaSf796y6z2ejtczyZLuZzBWQ+X0wn48+30WzWo7LO4C8f4wnFrct8Mn5/eSqJ0XsjOE9i9Bz02fvr9A56xmHx+vF4PYxeF63QCw6PVcPbpD14LtO3R6HPPqbd4SmFh1hi9t6j9blMhlN4uef2t2U+eRnW/PFiCDylMB6ghLfB8EQWfb1x9voIeCKvvZTw0tP3ZTLt7gmzz4eoP5fFZ1f88SDnr8t83I3AgL5PBSFUfTTp0v5B6gfsA8imymHR2hVHw/APOPSTOPFDrIgUFi0nqGHuj7C/XTKJ/Uhk0K4zjAbhO24OTyngCoMWOhimfwerS162VR3c94Nh9sfbpShqxRUX9/AH9T90SJZV8R2xzOSmDmbjIfiKE1YVUDeCcnN2/Bw4/tUVUFfB/MaoPGz69fbH0+lSxVeTarlFY2ecDemAx93uC+S/kwivqvGhOio3doX+8793BGgmX7YAr2px1QlgfdBggN74+x2B/6Ia2OkENkNXNU1GQJGukfrPQMcdQ9/tdj8/FwBVMwF4w0g2dQLSeal3Dzx+EXwAP17T1crQDK0QwzB0v44PffGBPYDiA/yejAOWruuAamTohq5broxAvSfM+g6Be4r/c6RfomBtUQ70A+iWFTjS12oD4nvfIWhH8ffsixOa9ppysCj6em1jmQJgOHp/kALAAKD/DB8WIKlp2sCBim2bZihXQE0FHz3xvR3xv2PxHW2AwcrMZLUKJV0gkw+BQN8xkCrgxysfoENIkVfwxwxcpRFfmT5iDNr8EgJ7/hFCURiA7k07cJubT+TtAQogFhAUQCk4KMIYH+Dvmy9z6/RRT3wYg4HAuf4cIcnGoCblArH3LERd4Hi/nFyKOannLACNpAT2bVork2JG+Og2CKFMNhE+EwJXHG3yZ50qKgajLhYAkEOE3dCPtzDn2qfd7mTA1LuNk9DF0aEbh8wGL60tANVHBLtc+2u2xe9D/NCNOnDI9moN00BNpcjZuH5SX/eKi+DEdzdi/2u2TWYD2UIAOQ6YOIqUoi6AD+M76BmHOIy415QoIk4iHRTG8nkIIecAYFQS7JBXoZ5wq94HzzmEG/aWgxNWURweJBTo8vSlagHYX8dcZWoYkeG1PToTv/ZWjGvr4zlZl7xX8bFfqSt2JTueFlpw48ojv7Y4+Ki7AMLV18gCtzs+oVB7Ut2uEyeouEB9f/tQqTKAZclMcAGEnooPWhF75HxWmQkd2fbyoZKIa7SRuBZBbj9rdxBVXKa//fvkvx7qDvhwETern0InECNMT5KtyxthLMRkkN+zw3USYa824ZeDKEqeT0BVE367POWjYjAGqc9mQCIW/Fiw+McNA8jdkq11WfgZ+Jq65fvBnCfguDrb22dlxXeNOAiCFk66hWKB1oSvapouEuB90NWNLLrAAhz8q8Hf+Xg8/6X38FNWLhDpqxk84BsCAYUn4LgW3dln8Q1eB1r6e9wTOf7dhFfTrNhvyjFQl2XMxDDiRgIIJzqLLeTly3b97vcelf1NHaR5qf3vH8+gjNgYeoIbCRx8Gt/QSg5ZBQHFdzwlwt41aMa3r4SA40X4uv8ty+XwFF/3haGQd0IFhSS2wEIsqsYxOB8JPnJw6Lv7tLF3qKAAsoJzQj+8Hs8l/DLTPo2ahDy+0AsUBwcswsJ7Akj8C/iw03Zc3w+9a+OEobse26j6vo8LFbD2qxqDtwIsEhA3BanNgjxUA4UZwAM8usiMoGLPa5yy46vnsO7kh5HH/LV0Pwq/tlMBcFHZmUcrm1Io3YDU8Hf0PEZ7A5vuRgJq4mXzzOagOB61gZq3X9UovB2IcctpJUHguCS0YFsUP9MBuABTwGazIUW86qK1EEaAFANzefsz7cmFB1o2CRq54oJkUl2TOulqZZqWJnQFIICUzTcIqbuZgE/0xMpBMUYgbz8QIKGbtLYq/RQfoAMwWFlFtDMnwOoFgV1LswZAT1mxb8XZn9nYx9oPBKBpaXVr8FkPD5Eok5VHO2ngd/m3d3L8b9hkNTphoqCynLP/W3LwMASbZljbmrzJwjM4oMNRZgVNXQZHjoATNXbDLS7LfaNjyrp/MQQF1UymQhals/reGKHEMHIdUDOcPY5A8y5N9Tmi3rmwPuCTsLlkcwjLclmM1AkZfk5BLVWwcSQ7p0Jityx3DErtU6kmj4iQeKlkdw4EdINXwjK9eqR7gXPDhk+VL1VUygCxct41LfEZA1nUdizZnBIbYCMLuxdT0zp1o803dpOtekuW28TF35sDTuNc+UygOldCgEQoRhIniHQqHAUYyMg2XxPhig8vpJxR2p7lDeAjSd3Q7bnECdAhFhiUowI3RTRI4Xec8mld61oXzEPmshBNSgL+Ug7CLFXav5hySvRc+yx3ofsSmHFjkMq1LMag8EaOAqmTTCwkKE7FpBNYtowQwQ09F0nqJgtSSQ4MoAgWBjkHkYR5uZxAfqjsmNB/k6eXyyqD14TWgz4DSeokP1IhC1SGFN/KLZHjG+ouz1BK5Wsnazypy9/UQfJgsSRljXBAcj9WwSAnsdzdwgcGSw6eLoEovGXLLJAnTaTB6pRkfgQ7MFMEtwlctLztue4tmrxKJRBl+lJiA1ge2gUFi1OD/iO2mP4U8sPydQane4ov8wAuhSxLWCAXFjASCkawy6H5T/YsEA3P0GEhFkrwuYSF/OBGYGcUcg4ZictX3vIah0uGb4nwdiBLXvFZK1nSCh1gbWabIgXilMaJNvaLpctpyjzDP4ngGbptrySjcCWFLstaOZgmAAkH3hawZL58Cfg5h5NRYlvrDJ0k8aTZUyFt15C4dFcsCclsUZLQLzsRnh4cuGg5Nm36mqEDviutXExcNqRuXTbSiiSAhhGcRA1A8wMjg870bhfZU2n2spq9lmctNu6qpMA4UGvY1pqnQOAZtp2BF+irlSuZBblB6LYKkOKWM47Agkw/l9OO5u5PF4JuF2KW6LARkWdv6+eZGjJHThSsVhUOzDNN2zJY4MOg5s5xidsUbwRYnj2XHeVpOMKBonRVVkhplEQ4SmXGnJNU2v8U6RGOxvQlOrhBpV6OS/Zb9v9mUN+H5AqQniRqTKEjnFIFy0k0UDPNVLIPyaThqHNjAtMBJRS9+i70irpqIPd+Kg0HmW4c5UJIwYHQv8xC8fkvk+8n5OhCI37zqcZbOVSEsB+UnY3YhP2wX3Y2ZJPBKoBNYNPREeXWYbY7x/kchEPCgY03XL/PRwY6Vgd+iG8mb28d57t3oJEcjQj9hM018bqUmPzAU3KWN7qTO7593P/ecR5yaDnCrp+QnctW31r0Q2bhOPFJ+vyG6ZncPWB9N5WOSOc60Bx+6BMJQ5q5P9D/uyd3D7W2PE5BM+JOIa3PLrQ41tvhYDMqMvNtTwy0Odg85GDlY/AffbOgM/6z4Fse738efrsLDk/Db3nd6Gn2b3nJ5Wn4La/5PE3/LS86PQu/7VWvJ+EvWl52G3izoElaX/d7+M0qJpP3tneLaqeZHiFdrnw+wQCTTtcMHzwDdr/2+0gNzKevrU1fiCRk3hO979XvR6gAwD/6X37ve7t56PX//wF78ZIikHWFqQAAAABJRU5ErkJggg==" /></p>
+<p>Reddit</p>
+<p><a href="https://shafiunmiraz0.medium.com/choosing-the-right-kubernetes-cni-in-2025-flannel-calico-or-cilium-0f2809caee6f"></a></p>
+<p>Choosing the Right Kubernetes CNI in 2025: Flannel, Calico ...</p>
+<p>Sep 14, 2025 — 1. Flannel: The Safe Default. Strengths: It's simple and ubiquitous—often the default in lightweight distributions like K3s, offer...</p>
+<p><img alt="" src="data:image/png;base64,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" /></p>
+<p>Medium</p>
+<p><a href="https://metallb.universe.tf/concepts/"></a></p>
+<p>Concepts :: MetalLB, bare metal load-balancer for Kubernetes</p>
+<p>Concepts. MetalLB hooks into your Kubernetes cluster, and provides a network load-balancer implementation. In short, it allows you...</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABPklEQVR4AaRS0W2DMBCFigHSTyRA8QbpBmWTdpIkk7Sb0A2aDRwBEp/JAEjOe47vYkKEFAX59Hx3796djd+SF79Fgb7vN13XfS71mAmwAOZozrl/FDfc04ZhWMOfrIkASDtkGxR+l2WZ0uDrGsfRBo7GVCCob0F6r6rqF+OT7JR522whosdSARRadjbGnMnFfjYu48GagIkKMMDOxGfMC8QjSTHPLyaxGHHEDX0vkKapHxtC/vYFQbIkIX8kxoYjruh7gaIoDnTuDaQ1xBrkjUxDJA/4R/QC3CyY3jg5bdt+EcVigVqCAWt0mbwFa+0Kx/nJsswEzu0vgMyR9pK4R3ZG4QnxfZ7neifxBAlEdiCJuj5h3INjZxRzKr5WbK9rIsAQ1SEko9co/BAfyClJU5sJaAYbFuAPPPxDSPt1AQAA///zOIFGAAAABklEQVQDAMJsmSHHAV6qAAAAAElFTkSuQmCC" /></p>
+<p>MetalLB</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAY1BMVEUAAAD///+IiIi+vr6kpKT8/Px7e3vq6urf39+urq4qKipubm7Y2Njc3NzQ0NDFxcWCgoJPT0/19fWWlpadnZ1kZGQkJCQPDw9WVlYwMDCQkJA3NzcfHx+1tbVISEgaGho+Pj4P2HkrAAAC6UlEQVRYhZ1X25aDIAwU79aqVXt3u93//8o1gAhksO7moecUkkiSyRCiKCCH+pwci0GIoTgm5/oQ0sPSV4XwpKj63ebPwbfWPp67zNNFP2uSdIzjMU2abFlKP5rHWrWNJ3t5ilu9EW+aX0t11vjG926xykt5DduflMYltH9R/vPQfiXDDG6T5DIbFd7saK/bMjdaLdqRWTp9stdpBh7Ic8aw0nevL3/tDk8q438wt/NiwxYnkAfKf8btJaju2IOT7CutAKwPgbzKKGw8lDh/uQIfP5nMZOn+RfVTuIFl7xxUUwKAUr+0FdiLMms9DcCzWxygBqK0L73pxmPksBIBOkJpjv2cVVD/GGLA25d5XTHMEPiExUUQ+4W26zeCNAIqKWtH2CEQA/6IHFp9AYWbrnCBT3gXjqAYWhnDIRBB6zoYAzEconr+nfjm1bUXA3BAPVVHZ4zCl+dg1uQyo/EcJajjFVIdQUqNEEl0pB8mT99eiG+uNX/8SEUA1w243MBnUirDgDJcc3sElpGSC6vYIAdnphZTAaCDDjnglZQOUAhxfkE3POMMGQJK4ly0aeQOGGmktAbKKG2rd8I8+LwtywiApPvw9FN6DnzilUDiUL4s+kVfe4D0RgMJZd5MVh+2U+o4cAleNRNr5y/b4hU9nL52HKh2ZoRS2QeQIVnc5HxKEQqjNIOAwXTw2lo2+y6U5pFqvug6yDX0YBE8RSBbtHAc69IlXuv8HHVU65Kxcy6Wb6lWguavVWxmaF4vFiqnQSmdNTSojU4l16vNuVwF5JdFktUot9MkrHuy2xzs+9I69orgdcBo+UDkSa6iJcawZpplxEFXnC9vUqKL0+7B0JAVEjm7vJ2DCTjmBeSRCcZPgUET2wtUK2o6Puoi6TMBh7q9w7YcPOBQ/4dxP6C1+8ERxKpq5f8/efY9uhr2gHDk07Mv+5zm1LwywcOTX7BInuzhrAlx39OXBD6+AUttiX7+Z9lQbj7/fwHklhqcl2IcSQAAAABJRU5ErkJggg==" /></p>
+<p><a href="https://kakarlayogitha.hashnode.dev/metallb-basic-knowledge"></a></p>
+<p>MetalLB basic knowledge ! - MyLearnings!</p>
+<p>Apr 9, 2024 — Here's when and why you might use MetalLB: * Bare-metal Kubernetes Clusters: In bare-metal Kubernetes environments, there may not ...</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAOVBMVEVHcEz///8oLTLq6+svMzgvMzgvMzgvMzgvMzgvMzgPFx/V1tcdIilHS09bXmJ0dnmYmpy1triqq632RbW3AAAACnRSTlMA////8TT/w3VRBzVONgAAAwNJREFUeJzNm9uWgjAMRbVgi+Ui+v8fO6DLWSpJmgTkmKd5GHp20xRJmxwOSzs1KdVxY6tTak6E2MLOaWvpV0vngnyz+cw/rW6k2X9d/m6sF77q/FdL9PT3kp+NcEKzp36Mi0jYWX9BsLv+B8Gu6/+01zhA6McI2H/vlqALMNsZugCzwXbA0x47YZ8fANJqaATMdsZtgYclaAjONn1/YQFOK/dAmGzVAI0/BEKXu9gPQx/nP7yWvAAh92NbHe9WtWOfnY5IvrdAyJf2+GbtxYdQuzZBHqrjwqohe8byAOTrUn62m4fADhBCS+tP6+DYEmaAEAj3/y+DncAKIOp7CIwABX0HgQ2gqG8nMAEo9M0EFgCVvpXAAKDUNxLoAdT6NgI1gEHfRKAFMOlbCJQARn0DgQ7ArK8nUAE49NUEGgCXvpZAAeDUVxKUAdz6OoIiwAp9FUEJYJW+hqAAsFJfQSADrNYvE4gAG+gXCSSATfRLBALARvoFAgmgpN+OU2Ya+8ut9I+VCyCz+cfDrn3u5qmFKU0eCv/b8jkTC8DlX89JveXDU7JaoGUJOIAwFKb04dUuyuswcKvAAWRxPMKloZNTJs4FDEAQXUqOFqLoggvjAgZAjsCeHKwTobk4pAFCL43FRZSHmgHoRmkoWr4UuCN9kkUDiHPhN7UYucxjjAekkZipzI9J747K4gExoJnFjKW9Qz9DAsgxyL/Y5SCgwWkAcSD+WFQGp1+GvwkQxYFY/e2WAB6E+G2IfxGhX8VyFDp/jOiHfvTnGP9BAv8kw3+UxnwTBzR+lvOXKSsTk/i9xASfmuGTU3h6jj+gwB/R4A+p8Md0+INK/FEt/rAaf1yPv7DAX9ngL63w13b4i0v81S3+8hp/fY8vYMCXcOCLWPBlPPhCJnwpV4QXs8WNy/ngBY3wkk54UevK0vb1Zb3wwmZ4aTe+uB1e3g9vcMC3eABd8CttPvBGJ3yrF77ZDd7uh294xLd84pte99yNdNvvbk6opfZvcOv33QvY5ve77dr+/wcKfCci6EC1nwAAAABJRU5ErkJggg==" /></p>
+<p>Hashnode</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAb1BMVEX/1U8AAAD/11Dwykv/3VL/21HkwUf/31NkUx+Vfi77007/2VH40E3pxEm9oDsOCwS4mzqFcSoWEgetkzcbFwhbTRwoIg1LQRgzKxDEpT10YiSkjDQ/NhTWtEObgzHfvEZtXCJ+ayjMrEBTRhosJw7qQwOXAAABYklEQVRYhe2U0XbCIAyGSSyihbbrnFudzna693/GJVBo51zhbGd3/Bc1IPn6J0SFyMrKysr6NyGi9rGmRck7iOOXmjcW0yto4EG6hdzSAnFFz7Ul6KppoJWLhKIFeHRH0ADAThIAHADLJ4B9EanAZXnWsxQBgPIFoPPV/GzhDNDwKZt40BNAvVJgYvnUMjp2lO78SYkAUEf67HUsn1q3o4MlUjsB3nQAFAc2tNxAT6BWnSUb2CjhAbJnY5EGjtI1W1jTo0IPqLi37yopn6rvyMJACfaFzsGJ/KS9ny1cwGolAoDyodPRG/Aqrpy/lRPAKrkEobljMI6MAxxpPOCScIlO6hoMOECtJFXRlKlFFJsbQOXmYkgt4huAJrHgSayTJuk+wNYF5g8AG+zTirgLELIOP/XfAYQaeLxSboInqZ0DepuFJYUfKQA0xkx3Tgu/X05xhICzv65Z/GU/KysrK+tWnwwqDCGg99eRAAAAAElFTkSuQmCC" /></p>
+<p><a href="https://docs.cilium.io/en/stable/network/servicemesh/ingress.html"></a></p>
+<p>Kubernetes Ingress Support — Cilium 1.19.0 documentation</p>
+<p>Feb 4, 2026 — How Cilium Ingress and Gateway API differ from other Ingress controllers. One of the biggest differences between Cilium's Ingress ...</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABPklEQVR4AaRS0W2DMBCFigHSTyRA8QbpBmWTdpIkk7Sb0A2aDRwBEp/JAEjOe47vYkKEFAX59Hx3796djd+SF79Fgb7vN13XfS71mAmwAOZozrl/FDfc04ZhWMOfrIkASDtkGxR+l2WZ0uDrGsfRBo7GVCCob0F6r6rqF+OT7JR522whosdSARRadjbGnMnFfjYu48GagIkKMMDOxGfMC8QjSTHPLyaxGHHEDX0vkKapHxtC/vYFQbIkIX8kxoYjruh7gaIoDnTuDaQ1xBrkjUxDJA/4R/QC3CyY3jg5bdt+EcVigVqCAWt0mbwFa+0Kx/nJsswEzu0vgMyR9pK4R3ZG4QnxfZ7neifxBAlEdiCJuj5h3INjZxRzKr5WbK9rIsAQ1SEko9co/BAfyClJU5sJaAYbFuAPPPxDSPt1AQAA///zOIFGAAAABklEQVQDAMJsmSHHAV6qAAAAAElFTkSuQmCC" /></p>
+<p>Cilium Docs</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAwFBMVEX////V5/f+/v7W3OGYv+mItufa6/j5/P6py+6Xwevo8Pq8xMrr6+vv7+/e7fnl5ufIysycrLzM3exxqeP29/fa29yzt7vOz8+orK+YnqPBxMe5u725zOLH2uyFjZSptLzUpxapnnqIlaG0xNevu2h2flipjjxmYUbFazWdkI/E0+Fxg5GirV15fl2YN0RpR065YyOnt8drh1BoaVezJR6BTExKU3+SobCBpRpnfUZQaIhMVGNkRoh4d49RcattfpwaKwWqAAABQ0lEQVRYhe2X126DMBSGgTShLcOG2BgcSFroCulyF919/7eqGUpcxGjlq0r+fIGE+D84tiWONU2WiSSaIYl0BQqFQqFQKP6AOZ8OMf/xcNdf+3DfnfXjHphCHtnYBvUocRrBTO9nVgq2/QECAQlhRGgYLGBAREGcDAgcUUDIEmNKIIWQ3zdRJYhXR8exPyBoWh1kcwC2GxxnAlObC7KT07Pzi7We9wqsmnavA6zVZlIKLq+ub27XfuFlaeYxxnK2E/Aw2kUc5KD6UstQVUJyd//w+OT5aVZEXp6ylG2S3RcAILwTLyIYQhrCBaTN1HABe355fXv/KCez8PV6iCWIgogGASV8EfBS2wp0q/j8sqpQe0nbAsMEBjARLwRgQaDrq7x7N7QFHfxiI40J3AGBOy4wp3uDjOUVCsX/QvroK334luUbW8IcXbtXe00AAAAASUVORK5CYII=" /></p>
+<p><a href="https://www.adaltas.com/en/2022/09/08/kubernetes-metallb-nginx/"></a></p>
+<p>Ingresses and Load Balancers in Kubernetes with MetalLB ...</p>
+<p>Sep 8, 2022 — They redistribute the traffic load of the cluster, providing an effective way to prevent node overload. They allow for a single po...</p>
+<p><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAJFBMVEVHcEyVAACZAACTAACXAACdAACaAACXAACeAACdAACYAACeAAAV862OAAAACnRSTlMAIHQPN8ObVPHe9fEfsAAABO9JREFUeJztWtmypCAMFcLO///vJOKCbUuC2t6HMVVT83BbTzayHByGV1555ZVXXnnlPxUwXmvvDTwODEY7G1Kwzhv1LDwoxI4p52i1eRS5BifL1dPog/Hk9Zzzn6CrGT245z2PxhM6So7aPG88wsc8wgf3cMYXeBsKfHZ/YPzgbV6sfx4dzASfsvXPw2PsU4FPUf9B7JWOE3xwf3DwKPgFPv+N+S6kCf9vzJ+9n/IvzAfunW6BTzcnP7YzY5Rqn2izmh/vNB/BvVes9YMOM36wN8LT7CTpI2v24em7z36vhU1UzYfvVnxs5cIebmxi8KG/I2AzlR7l9fQd2g/dE7AOwQuf0XGxP7ujHzFH6FOwnUVpJdNhxT/Of9VVGDVOkFKNdZbgd8VAOTk+VPgpNh4C+VBI04Tc/xV+aNZfI30l9dMsLeUbfN38qTQJTGzl8g4/50UFpgApWRJQR8mtWG7wg7U2TvMXFzVZFgKVFGkAFG64CnD3IS8wAUARKUAlXX4Cl1ej2pZ9vaQUlZySDxMwd2nbPgGjCM6hyUnuAFo7Y5w2XiVIW/4cQumponaKwzftvPRPOv3yx6AUdYEzS7FaCnCWTQCKa26qNHUrKBhq7X/tHtilwNTV+HSu55/JB+wZFCgwOSDx1iibPkWyhYFuZ7ef2jprzKf9owuwf3IqMAqAk7S0YW8/nQPrtGbnJ0aBya7MKfCJH8S0H6OAmSIQ2wqYDX4OVjo4sgr46ZVtBfwm/rkDnmpXSwHQSeCBav6mnzJp3afAtNk2PaBrfD7tP8Q0SzbMvm0kYTV/nyEAfPMJxSoArjZf1DHOKXBQiMzG/dKhsRbdLHFrefv6bvCh2j+ipPTvFWg6rVLgi6OUq0vPOfoJ2o+tCuwHIqhPf7Yn6SfTVmBNsZ0Cxq3uJ979FDyxDUwvmvnFjxBAdfhzukD+eWZuOqiE3i6HP2Pwz7Mv4JjMNaOfP863WkY//P8a764cUznQ1SFsCRbsfAv8ZeLX89M+bK4SlV84/yAmixqiu2oXGD1ZH+I9l23KyosXXa+GcemgUeumqz5BBIqMCxdd8xXw2zhHx0dgvF+1mInWITQt3neBD7TJtM4AKOKjtabRlkhxnpjuFh2bf4Yiw++uWESrE2nyI3yXO36M4bj7nldJHTCMrXffEK6KC3LX6lxawqmZ50B8hwPm/Ygl3TpE2Y4rpIX5FLIeEnFi3nWoLt5kTI1EfNcdjl+nn2628LtgAHqiCdX0f0sQcOPqc2VFf98RBBw1O+0AW03AN4wh3SvsQhXdkgaaoRu+yWYHFVB2TfzQUYIWMRUJeWoJnQXO4W9pgAsaAM51557eEgFnNcBsPl1NoWbCTmaiwcHyvPfqNOjngoaR8sqXbtF9zQbhdND5KvqQKFxbpbZ8VN/XYAb36eurnA41I5jkrITCneqWL7i2nKSUkwVNny9eXKS/ajCqwD2icMNOl8O/iNlqwO7ovnxAeObUHInbakAcjdXfWBKgyJdx9hyFdyQ67lTIKZbVkVY4XOpwjSif7JYTe/fni8rtVBivC4k3GGUM+sxk3EFk7MS7sFOBYpFnWesVxwKdFPBuvqE/FPpm+oefDRfC5psOYYqIvYtIORRlnE2Vv8OaDmT7Ix/O0pcKMa2xH1PRfT2VP1Vj5FJ04VKehX7llVdeeeWVV34i/wA55EK8w7mYZgAAAABJRU5ErkJggg==" /></p>
+<p>Adaltas</p>
+<p><img alt="" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAEAAQAMBIgACEQEDEQH/xAAbAAACAgMBAAAAAAAAAAAAAAAEBwMGAgUIAf/EADgQAAIBAgUBBgIJAgcAAAAAAAECAwQRAAUSITFBBhMiUWFxMoEUFSNCUpGh0fDC0hYkJlWUsbL/xAAYAQADAQEAAAAAAAAAAAAAAAAAAgQBA//EAB4RAAMAAgMAAwAAAAAAAAAAAAABEQISAyFSBBNR/9oADAMBAAIRAxEAPwBbpE7glVNhyfLG9yvIoqhXMySNYX8Jtb3wHFeC4GkqbbN7YtGW5hDALVdWFbSdIVW8PvhaNDUSZBAJIFAltINivi1b+h9sF1PZeGFVJilVmUkKzWNwD5/zbFky9qaslpkWYtDL3vesjMrPYXCLybkn4R58HbGwzjL6bLzDHRuoEziGREZgjeHQWCsTcg2JNyd7GxDXsw+Ltgne32ifLnmUnSFbmGX/AEYrbhgT+o/fGNNl/fSKrkpqBIJ2v+eLHW5SaiClljrIS0lO0rI1h3Y1Ab73vsTxwrfMmTLBSyuhraIBZe61sWL72tccDkfLfjETbKIip11B9Gbi9iRa9+Lfz9uBgmXu8GtTcg25/T+fli0VGUx1UMRizGktIAYwNRuLqLnbbkbc8cXwFXU60FOAJYp2cXGi46kdQD93r5deRrYQ1aOpAZZQhDbOTb9cH0dGk0qDv0cff0vwPe2HDHPSzTxJ9SmFHYjXJTAAeG+4tcfMDkdTbATVsZhM6ZPIraQRam07lyo2tfgaibcHG6v9M2FZS1z5dP8AZgyQu3wM1jqU7MDbYjz3642NfW1FXl94Gl71iFJebUwQgkgE2sDbpyPQnDOaaji8MmVh3PdgKsN7BkuTx57e5F7YFpqmOaofusrcR9y0njg0hrE2X4eTp4P4htvjouTkWOiy6EeGLezXYkamrWSRCXBt5nBEqJKwkCkavEX1DTby98O+CtgeNDL2eMbaHd/8rcKFJH4dyQARa/J5tv6tTTvp/wBPyoJCoGqmG101nptb4R5tsbc45weiKqoFVY2jBbWzDjm1uOfP+c4ypKdWiZu8KGxtxY++/Hnth7UTwTyQa8lEUcjiP7SFfDsTewHHG/52tiNnp3hmmOTPGYo0YItOPtCwGwAUnYkA+xvsMEClkkjMjWvYDAsllRxBpvY2I4P745wi7TZ9ZlbPc1OoabtWyGw+bYOo88zjvEV+0OZuC3Wtk9epaw+ZxthkHZJP2iSj0mmh75VRnkUoRfX4lA1D7lvLk78YlhlzqR7/AEWhWTVsSS/g1oAfiB+Eu3T4beuEdTdoM4Dskue5m1yUN6uRgLki99VuT/1iWr7RZ5FRhIs5rgVOp2WoYNuLc3v0POCgPA1HaT4hQ0gFmsmq+/htvqHTX87DYeLHs82dvTSBIYUn710XRpPh0+E7t+Kw/pxzv/iXtB/v+b/8+X+7E0PaXtDa4znNHtyTWzH+rAB0CZ8+NxFRwgamBZiGJG1iBrHI1bG3TjE1JJmT1DfWNPBGqjwCJrm9/O/AAHTe/TjHPMnaPP5JQPrvNVZjwldKB/6xNSZ72mq4zDS5lnVRKSCAlXMzAWNzs17bi54G1+mCgAd3QBZLSR2ANze5+EW07+fofLBES0SP9gyltDHwtxzuT+WNFiSJzGdSOVb2vjj9L9MnXA/TD6vuIzGacrqDWbSx29B6euMatyYQlyAWLab+l7/rgC/XVv6jHrSyMiozXVb2FuL84fHGKU7YY6qWnhxJFdmCjUTuQB54hxkCB1IPoMOMT1L3mZldidR8RO59f4f3xaOzEeXNR5e2ZzLDli1jTZi5O0ndgFImHL3v4VtyzEWscVKRhIXd3dpGNzdRYnr1xLSV9VRiRaabSkoAkRkV0kAvYMrAg2ueR1wAf//Z" /></p>
+<p>Would you like help with a <strong>BGP vs. Layer 2 configuration</strong> guide for MetalLB in your specific network?</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../Install_k8s_dash_board_metallb/" class="md-footer__link md-footer__link--prev" aria-label="Previous: To expose the Kubernetes Dashboard using MetalLB, you need to follow a few steps. Here&#39;s a guide on how to set it up">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                To expose the Kubernetes Dashboard using MetalLB, you need to follow a few steps. Here's a guide on how to set it up
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../linux/APT%20commands/" class="md-footer__link md-footer__link--next" aria-label="Next: APT commands">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                APT commands
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy 2025 Michael Armijo
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+      
+    
+    
+    
+      
+      
+    
+    <a href="https://fosstodon.org/@squidfunk" target="_blank" rel="noopener me" title="fosstodon.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M433 179.1c0-97.2-63.7-125.7-63.7-125.7-62.5-28.7-228.6-28.4-290.5 0 0 0-63.7 28.5-63.7 125.7 0 115.7-6.6 259.4 105.6 289.1 40.5 10.7 75.3 13 103.3 11.4 50.8-2.8 79.3-18.1 79.3-18.1l-1.7-36.9s-36.3 11.4-77.1 10.1c-40.4-1.4-83-4.4-89.6-54-.6-4.6-.9-9.3-.9-13.9 85.6 20.9 158.7 9.1 178.7 6.7 56.1-6.7 105-41.3 111.2-72.9 9.8-49.8 9-121.5 9-121.5zm-75.1 125.2h-46.6V190.1c0-49.7-64-51.6-64 6.9v62.5H201V197c0-58.5-64-56.6-64-6.9v114.2H90.3c0-122.1-5.2-147.9 18.4-175 25.9-28.9 79.8-30.8 103.8 6.1l11.6 19.5 11.6-19.5c24.1-37.1 78.1-34.8 103.8-6.1 23.7 27.3 18.4 53 18.4 175"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.footer"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
